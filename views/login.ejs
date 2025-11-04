@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invento | Giriş Yap</title>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-    <link
-      href="https://cdn.boxicons.com/3.0.3/fonts/basic/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.boxicons.com/3.0.3/fonts/brands/boxicons-brands.min.css"
-      rel="stylesheet"
-    />
-  </head>
+  <%- include("../components/Head", { title: "Giriş Yap"}) %>
   <body class="light" style="overflow: hidden">
     <!-- Reactangle -->
     <div class="login-bg">
@@ -25,7 +12,7 @@
     </div>
     <div class="login-container">
       <img src="/assets/img/logo1.png" />
-      <form action="/login" method="POST">
+      <form action="/login" method="POST" data-loading-form>
         <div class="inp-sec">
           <input
             type="text"
@@ -44,14 +31,24 @@
           />
           <label for="password"><span class="bxr bx-lock"></span></label>
         </div>
-        <div class="inp-sec">
-          <button type="submit">Giriş Yap</button>
+        <% if (session.alert) { %>
+        <div class="alert alert-<%= session.alert.type %>">
+          <%= session.alert.message %>
         </div>
+        <% } %>
+        <div class="inp-sec">
+          <button type="submit">
+            <span class="text">Giriş Yap</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+
         <a href="/forgot-password" style="text-align: center"
           >Şifremi unuttum</a
         >
       </form>
     </div>
     <!-- Scripts -->
+    <script src="/assets/js/loading.helper.js"></script>
   </body>
 </html>

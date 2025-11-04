@@ -15,11 +15,11 @@ exports.postLogin = async (req, res) => {
   if (auth) {
     req.session.user = user;
     console.log(req.session);
-    res.redirect("/dashboard");
+    res.redirect("/");
   } else {
     req.session.alert = {
       message: "E-posta veya şifre hatalı!",
-      type: "warning",
+      type: "danger",
     };
     return res.redirect("/login");
   }

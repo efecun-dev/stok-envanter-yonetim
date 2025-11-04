@@ -24,6 +24,11 @@ app.use(
   })
 );
 
+app.use((req, res, next) => {
+  res.locals.session = req.session || null;
+  next();
+});
+
 app.use("/login", loginRouter);
 
 app.listen(process.env.PORT, () => {

@@ -3,8 +3,10 @@ const session = require("express-session");
 const app = express();
 const path = require("path");
 require("dotenv").config();
+const User = require("./models/User");
 
 const loginRouter = require("./routes/login");
+const dashboardRouter = require("./routes/dashboard");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -29,6 +31,32 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(async (req, res, next) => {
+  req.user = null;
+  res.locals.user = null;
+
+  if (!req.session.userId) {
+    return next();
+  }
+
+  try {
+    let result = await User.findById(req.session.userId);
+    const user = Array.isArray(result) ? result[0] : result;
+
+    if (!user) {
+      return next();
+    }
+
+    req.user = user;
+    res.locals.user = user;
+  } catch (err) {
+    console.error("User Middleware hata:", err);
+  }
+
+  next();
+});
+
+app.use("/", dashboardRouter);
 app.use("/login", loginRouter);
 
 app.listen(process.env.PORT, () => {

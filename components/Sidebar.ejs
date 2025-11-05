@@ -1,0 +1,57 @@
+<div id="sidebar">
+    <% console.log(user) %>
+  <div class="sidebar-header">
+    <div class="row">
+      <img src="/assets/img/logo2.png" />
+      <h2>Invento</h2>
+    </div>
+    <p>Stok & Envanter Yönetim Sistemi</p>
+  </div>
+  <div class="sidebar-list-container">
+    <div class="sidebar-list-header">Dashboard</div>
+    <div class="sidebar-list">
+      <a href="/" class="list-item <%= active == 'dashboard' ? 'sb-link-active' : '' %>"><span class="bxr bx-home-alt"></span>Anasayfa</a>
+    </div>
+    <div class="sidebar-list-header">Ürün Yönetimi</div>
+    <div class="sidebar-list">
+      <a class="list-item  <%= active == 'urunler' ? 'sb-link-active' : '' %>"><span class="bxr bx-package"></span>Ürünler</a>
+      <a class="list-item <%= active == 'yeni-urun' ? 'sb-link-active' : '' %>"><span class="bxr bx-plus"></span>Yeni Ürün</a>
+      <a class="list-item <%= active == 'kategoriler' ? 'sb-link-active' : '' %>"><span class="bxr bx-folder"></span>Kategoriler</a>
+    </div>
+    <div class="sidebar-list-header">Stok İşlemleri</div>
+    <div class="sidebar-list">
+        <a class="list-item <%= active == 'stok-durumu' ? 'sb-link-active' : "" %>"><span class="bxr bx-chart-line"></span>Stok Durumu</a>
+        <a class="list-item <%= active == 'stok-girisi' ? 'sb-link-active' : "" %>"><span class="bxr bx-arrow-in-down-square-half"></span>Stok Girişi</a>
+        <a class="list-item <%= active == 'stok-cikisi' ? 'sb-link-active' : "" %>"><span class="bxr bx-arrow-out-up-square-half"></span>Stok Çıkışı</a>
+        <a class="list-item <%= active == 'hareketler' ? 'sb-link-active' : "" %>"><span class="bxr bx-history"></span>Hareketler</a>
+    </div>
+    <div class="sidebar-list-header">Raporlar</div>
+    <div class="sidebar-list">
+        <a class="list-item <%= active == 'raporlar' ? 'sb-link-active' : "" %>"><span class="bxr bx-paperclip"></span>Raporlar</a>
+        <a class="list-item <%= active == 'kritik-stok-uyarilari' ? 'sb-link-active' : "" %>"><span class="bxr bx-alert-triangle"></span>Kritik Stok Uyarıları</a>
+        <a class="list-item <%= active == 'envanter-degeri' ? 'sb-link-active' : "" %>"><span class="bxr bx-lira"></span>Envanter Değeri</a>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-list">
+        <a class="list-item <%= active == 'ayarlar' ? 'sb-link-active' : "" %>"><span class="bxr bx-cog"></span>Ayarlar</a>
+        <a class="list-item <%= active == 'ayarlar' ? 'sb-link-active' : "" %>"><span class="bxr bx-info-circle"></span>Yardım</a>
+    </div>
+  </div>
+  <div class="user-container">
+    <% if (user) { %>
+    <div class="user-profile">
+        <div class="col">
+            <img src="https://placehold.co/100x100" >
+        </div>
+        <div class="col">
+            <h5><%= user.ad %> <%= user.soyad %></h5>
+            <p><%= user.role_id == 'staff' ? 'Personel' : user.role_id == 'admin' ? 'Yönetici' : 'Bilinmiyor' %></p>
+        </div>
+    </div>
+    <div class="user-profile-actions">
+        <a href="/ayarlar"><span class="bxr bx-cog"></span></a>
+        <a href="/login/logout"><span class="bxr bx-arrow-out-left-square-half"></span></a>
+    </div>
+    <% } %>
+  </div>
+</div>

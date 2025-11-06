@@ -56,8 +56,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.use("/", dashboardRouter);
 app.use("/login", loginRouter);
+app.use("/", dashboardRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("WEB | Aktif | " + process.env.PORT);

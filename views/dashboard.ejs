@@ -1,8 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
   <%- include("../components/Head", { title: "Dashboard"}) %>
-  <body>
+  <body class="light" style="display: flex">
     <!-- Sidebar -->
     <%- include("../components/Sidebar", { active: "dashboard"}) %>
+    <!-- Main -->
+    <main id="dashboard-main">
+      <h2>Hoşgeldiniz, Ahmet Yılmaz.</h2>
+      <div class="dash-divider"></div>
+      <div class="dashboard-flexbox">
+        <div class="dashboard-item">
+          <div class="col">
+            <h4>214</h4>
+            <p>Toplam Ürün</p>
+            <span class="stat-pin success">
+              <span class="bxr bx-trending-up"></span>
+              +12% bu ay
+            </span>
+          </div>
+          <div class="col">
+            <span class="bxr bx-package flexbox-icon"></span>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <div class="col">
+            <h4>₺847,320</h4>
+            <p>Toplam Değer</p>
+            <span class="stat-pin success">
+              <span class="bxr bx-trending-up"></span>
+              +8.5% bu ay
+            </span>
+          </div>
+          <div class="col">
+            <span class="bxr bx-lira flexbox-icon"></span>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <div class="col">
+            <h4>23</h4>
+            <p>Kritik Stok</p>
+            <span class="stat-pin danger">
+              <span class="bxr bx-trending-up"></span>
+              İşlem gerekli
+            </span>
+          </div>
+          <div class="col">
+            <span class="bxr bx-alert-triangle flexbox-icon"></span>
+          </div>
+        </div>
+        <div class="dashboard-item">
+          <div class="col">
+            <h4>27</h4>
+            <p>Bugün Yapılan İşlem</p>
+            <span class="stat-pin success">
+              <span class="bxr bx-arrow-up"></span>
+              17
+              <span class="bxr bx-arrow-down"></span>
+              10
+            </span>
+          </div>
+          <div class="col">
+            <span class="bxr bx-package flexbox-icon"></span>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="grid-item">
+          <h3>
+            <span class="bxr bx-chart-bar-columns"></span>Kategori Bazlı Stok
+            Dağılımı
+          </h3>
+          <div class="chart" id="categoryChart"></div>
+        </div>
+        <div class="grid-item">
+          <h3>
+            <span class="bxr bx-chart-line"></span>
+            Son 15 Gün Stok Hareketleri
+          </h3>
+          <div class="chart" id="onbesChart"></div>
+        </div>
+        <div class="grid-item">
+          <h3>
+            <span class="bxr bx-alert-triangle"></span>
+            Kritik Stok Ürünleri
+            <a href="">Tümünü gör <span class="bxr bx-arrow-right"></span></a>
+          </h3>
+          <div class="critical-container">
+            <div class="cr-item">
+              <div class="row">
+                <div class="col">
+                  <div class="circle circle-danger"></div>
+                </div>
+                <div class="col">
+                  <h4>iPhone 13</h4>
+                  <p>Elektronik</p>
+                </div>
+              </div>
+              <div class="col">3/50</div>
+            </div>
+            <div class="cr-item">
+              <div class="row">
+                <div class="col">
+                  <div class="circle circle-warning"></div>
+                </div>
+                <div class="col">
+                  <h4>Samsung TV</h4>
+                  <p>Elektronik</p>
+                </div>
+              </div>
+              <div class="col">8/30</div>
+            </div>
+            <div class="cr-item">
+              <div class="row">
+                <div class="col">
+                  <div class="circle circle-danger"></div>
+                </div>
+                <div class="col">
+                  <h4>Nike Ayakkabı</h4>
+                  <p>Giyim</p>
+                </div>
+              </div>
+              <div class="col">2/25</div>
+            </div>
+            <div class="cr-item">
+              <div class="row">
+                <div class="col">
+                  <div class="circle circle-warning"></div>
+                </div>
+                <div class="col">
+                  <h4>Laptop HP</h4>
+                  <p>Elektronik</p>
+                </div>
+              </div>
+              <div class="col">12/40</div>
+            </div>
+            <div class="cr-item">
+              <div class="row">
+                <div class="col">
+                  <div class="circle circle-danger"></div>
+                </div>
+                <div class="col">
+                  <h4>Çanta XYZ</h4>
+                  <p>Aksesuar</p>
+                </div>
+              </div>
+              <div class="col">1/10</div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item">
+          <h3>
+            <span class="bxr bx-history"></span>
+            Son Hareketler
+            <a href="">Tümünü gör<span class="bxr bx-arrow-right"></span></a>
+          </h3>
+          <div class="last-container">
+            <div class="timeline-line"></div>
+            <div class="last-list">
+              <div class="timeline-item stock-add">
+                <div class="timeline-time">14:32</div>
+                <div class="timeline-content">
+                  <h5><span class="bxr bx-arrow-up"></span>+50 | iPhone 13</h5>
+                  <p>Alper Kaya tarafından</p>
+                </div>
+              </div>
+              <div class="timeline-item stock-remove">
+                <div class="timeline-time">13:15</div>
+                <div class="timeline-content">
+                  <h5>
+                    <span class="bxr bx-arrow-down"></span>-12 | Samsung
+                    Kulaklık
+                  </h5>
+                  <p>Satış - Ahmet Yılmaz</p>
+                </div>
+              </div>
+              <div class="timeline-item stock-add">
+                <div class="timeline-time">11:40</div>
+                <div class="timeline-content">
+                  <h5>
+                    <span class="bxr bx-arrow-up"></span>+100 | Nike Ayakkabı
+                  </h5>
+                  <p>Tedarikçi X</p>
+                </div>
+              </div>
+              <div class="timeline-item stock-remove">
+                <div class="timeline-time">10:05</div>
+                <div class="timeline-content">
+                  <h5>
+                    <span class="bxr bx-arrow-up"></span>-5 | Laptop Çantası
+                  </h5>
+                  <p>İade - Mehmet Demir</p>
+                </div>
+              </div>
+              <div class="timeline-item stock-add">
+                <div class="timeline-time">09:30</div>
+                <div class="timeline-content">
+                  <h5><span class="bxr bx-arrow-up"></span>+200 | T-Shirt</h5>
+                  <p>Toplu giriş</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item flex-2">
+          <h3>
+            <span class="bxr bx-trophy-star"></span>
+            Bu Ay En Çok Hareket Eden Ürünler
+          </h3>
+          <div class="best-container">
+            <div class="row">
+              <h5>iPhone 13</h5>
+              <div class="best-bar" style="width: 100%">145</div>
+            </div>
+            <div class="row">
+              <h5>Samsung TV</h5>
+              <div class="best-bar" style="width: 68%">98</div>
+            </div>
+            <div class="row">
+              <h5>Nike Ayakkabı</h5>
+              <div class="best-bar" style="width: 52%">76</div>
+            </div>
+            <div class="row">
+              <h5>Laptop HP</h5>
+              <div class="best-bar" style="width: 45%">65</div>
+            </div>
+            <div class="row">
+              <h5>Bluetooth Kul.</h5>
+              <div class="best-bar" style="width: 37%">54</div>
+            </div>
+            <div class="row">
+              <h5>Çanta XYZ</h5>
+              <div class="best-bar" style="width: 29%">42</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <script src="/assets/js/charts/categoryChart.js"></script>
+  <script src="/assets/js/charts/15dChart.js"></script>
 </html>

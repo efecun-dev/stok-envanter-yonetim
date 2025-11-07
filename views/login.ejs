@@ -1,7 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
   <%- include("../components/Head", { title: "Giriş Yap"}) %>
-  <body class="light" style="overflow: hidden">
+  <body
+    class="light"
+    style="
+      height: 100dvh;
+      overflow: hidden;
+      margin: 0;
+      padding: 0;
+      overscroll-behavior: none;
+      touch-action: none;
+    "
+  >
     <!-- Reactangle -->
     <div class="login-bg">
       <img src="/assets/img/login_rectangle.svg" />

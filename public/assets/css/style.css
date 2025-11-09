@@ -656,12 +656,12 @@ button.loading .spinner {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
 }
 
 .dashboard-item {
   flex: 1;
-  min-width: 350px;
+  min-width: 220px;
   padding: 15px;
   border-radius: 6px;
   background: var(--blue-4);
@@ -683,14 +683,14 @@ button.loading .spinner {
 }
 
 .dashboard-item .col h4 {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 600;
   color: var(--blue-12);
 }
 
 .dashboard-item .col p {
   color: var(--blue-11);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .stat-pin {
@@ -699,7 +699,7 @@ button.loading .spinner {
   display: flex;
   align-items: center;
   gap: 4px;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
   width: fit-content;
 }

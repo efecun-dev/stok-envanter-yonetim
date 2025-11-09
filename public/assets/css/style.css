@@ -1612,3 +1612,136 @@ select:hover {
 .dots {
   color: var(--gray-9);
 }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+}
+
+.product-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--gray-6);
+  transition: all 0.2s;
+  position: relative;
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 10px -2px var(--gray-6);
+  border-color: var(--blue-10);
+}
+
+.product-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.product-image img {
+  width: 100%;
+}
+
+.product-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 15px;
+}
+
+.product-content a {
+  font-size: 1rem;
+  color: var(--blue-12);
+  font-weight: 500;
+}
+
+.product-content p {
+  color: var(--gray-8);
+  font-size: 0.75rem;
+}
+
+.box-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--gray-1);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 15px;
+}
+
+.quick-actions {
+  position: absolute;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pr-actions {
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.pr-actions .act-btn {
+  background: var(--gray-1);
+}
+
+.product-info .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-info .row .col {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.product-info .row .col p {
+  color: var(--gray-11);
+  font-size: 0.85rem;
+}
+
+.price {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0px;
+}
+
+.price span {
+  font-size: 1rem;
+  color: var(--blue-11);
+}
+
+.action-buttons {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  gap: 6px;
+  padding: 0 10px 10px 10px;
+}
+
+.action-buttons .btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-item:hover .quick-actions .pr-actions {
+  display: flex;
+}

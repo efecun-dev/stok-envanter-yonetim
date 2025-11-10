@@ -833,7 +833,7 @@ button.loading .spinner {
 
 .grid-item h3 a:hover {
   text-decoration: none;
-  text-shadow: 0px 0px 1.5px var(--blue-11);
+  transform: translateX(4px);
 }
 
 .last-container {

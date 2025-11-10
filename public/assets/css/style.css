@@ -1049,6 +1049,9 @@ button.loading .spinner {
   align-items: center;
   gap: 6px;
   transition: all 0.2s;
+  outline: 0;
+  border: none;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -1059,6 +1062,7 @@ button.loading .spinner {
 .btn-primary {
   background: var(--blue-11);
   color: var(--blue-2);
+  outline: 0;
 }
 
 .btn-primary:hover {
@@ -1786,4 +1790,242 @@ select:hover {
 .compact-view .checkbox-cell {
   text-align: start;
   padding: 10px;
+}
+
+.dash-header p {
+  color: var(--gray-10);
+  font-size: 0.85rem;
+}
+
+.min-w-100 {
+  min-width: 100px;
+}
+
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dash-header .row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.form-grid-item {
+  padding: 20px;
+  border: 1px solid var(--gray-2);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dropzone {
+  width: 100%;
+  padding: 50px;
+  border: 2px dashed var(--gray-6);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dropzone:hover {
+  border-color: var(--blue-10);
+}
+
+.dropzone.dragover {
+  border-color: var(--blue-12);
+  background: var(--primary-2);
+}
+
+.form-header h4 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1rem;
+  color: var(--blue-11);
+  font-weight: 500;
+}
+
+.form-divider {
+  width: 100%;
+  height: 1px;
+  max-height: 1px !important;
+  background: var(--blue-a10);
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.form-input label {
+  font-size: 0.85rem;
+  color: var(--gray-11);
+  display: flex;
+  gap: 3px;
+  font-weight: 600;
+}
+
+.form-input label strong {
+  color: red;
+  font-size: 0.65rem;
+}
+
+.form-input input {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--gray-3);
+  transition: all 0.2s;
+  outline: 0;
+}
+
+.form-input input:hover {
+  border-color: var(--blue-10);
+}
+
+.form-input input:focus {
+  border-color: var(--blue-10);
+}
+
+.form-input input:not(:placeholder-shown) {
+  border-color: var(--blue-10);
+}
+
+.form-input p {
+  color: var(--gray-7);
+  font-size: 0.7rem;
+  font-weight: 300;
+}
+
+.form-input textarea {
+  resize: vertical;
+  min-height: 100px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid var(--gray-3);
+  outline: 0;
+  transition: all 0.2s;
+}
+
+.form-input textarea:not(:placeholder-shown) {
+  border-color: var(--blue-10);
+}
+
+.form-input textarea:focus {
+  border-color: var(--blue-10);
+}
+
+.form-input textarea:hover {
+  border-color: var(--blue-10);
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.input-group input {
+  border-radius: 0 4px 4px 0;
+  width: 100%;
+}
+
+.input-tag {
+  background: var(--gray-1);
+  padding: 8px 12px;
+  border-radius: 4px 0 0 4px;
+  border: 1px solid var(--gray-5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-10);
+  font-size: 0.85rem;
+}
+
+.calculate-zone {
+  padding: 15px;
+  border-radius: 4px;
+  background: #00000004;
+  border: 1px solid var(--gray-4);
+}
+
+.calculate-zone .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.calculate-zone .row:not(:last-child) {
+  border-bottom: 1px solid var(--gray-6);
+}
+
+.calculate-zone .row .col p {
+  color: var(--gray-10);
+  font-size: 0.95rem;
+}
+
+.calculate-zone .row .col strong {
+  color: var(--gray-10);
+  font-size: 0.95rem;
+}
+
+.calculate-zone .row .col span {
+  font-weight: 500;
+  color: var(--gray-12);
+}
+
+.calc-success {
+  color: green !important;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-row .form-input {
+  width: 100%;
+}
+
+.form-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-input-row * {
+  flex: 1;
+}
+
+.border-default {
+  border-color: var(--gray-3) !important;
 }

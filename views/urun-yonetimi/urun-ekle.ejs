@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("../../components/Head", { title: "Ürün Ekle" } ) %>
+  <body class="light" style="display: flex">
+    <!-- Sidebar -->
+    <%- include("../../components/Sidebar", { active: "yeni-urun" }) %>
+    <!-- Main -->
+    <main id="dashboard-main">
+      <div class="dash-header">
+        <div class="col">
+          <h2>Yeni Ürün Ekle</h2>
+          <p>Stok sisteminize yeni ürün ekleyin</p>
+        </div>
+        <div class="col">
+          <div class="row">
+            <button type="submit" class="center btn min-w-100">
+              <span class="text"
+                ><span class="bxr bxs-save"></span>Taslak Kaydet</span
+              >
+              <span class="spinner"></span>
+            </button>
+            <button type="submit" class="center btn btn-primary min-w-100">
+              <span class="text"><span class="bxr bx-check"></span>Kaydet</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Add Product Form -->
+      <form action="" method="POST" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="form-grid-item">
+            <div class="form-header">
+              <h4><span class="bxr bx-edit-alt"></span>Temel Bilgiler</h4>
+            </div>
+            <div class="form-divider"></div>
+            <div class="form-input">
+              <label for="name">Ürün Adı <strong>*</strong></label>
+              <input
+                type="text"
+                placeholder="Örn: iPhone 13 Pro Max 256GB"
+                name="name"
+                autocomplete="off"
+              />
+            </div>
+            <div class="form-input">
+              <label for="category">Kategori <strong>*</strong></label>
+              <select name="category" id="category">
+                <option selected disabled>Kategori Seçin</option>
+                <option value="1">Elektronik</option>
+                <option value="2">Giyim</option>
+                <option value="3">Aksesuar</option>
+                <option value="4">Gıda</option>
+              </select>
+            </div>
+            <div class="form-input">
+              <label for="barcode">Barkod / EAN</label>
+              <input type="text" placeholder="8690000000000" name="barcode" />
+              <p>13 haneli barkod numarası</p>
+            </div>
+            <div class="form-input">
+              <label for="sku">Stok Kodu</label>
+              <input type="text" name="sku" placeholder="IPH-13-PM-128" />
+              <p>Benzersiz ürün tanımlayıcısı</p>
+            </div>
+            <div class="form-input">
+              <label for="description">Açıklama</label>
+              <textarea
+                name="description"
+                placeholder="Ürün hakkında detaylı bilgi..."
+              ></textarea>
+              <p>Markdown formatında yazabilirsiniz</p>
+            </div>
+            <div class="form-input">
+              <label for="imageInput">Ürün Resmi</label>
+
+              <div class="dropzone" id="dropzone">
+                <p>Buraya sürükle & bırak veya tıkla</p>
+                <input type="file" id="imageInput" accept="image/*" hidden />
+              </div>
+            </div>
+          </div>
+          <div class="form-grid-item">
+            <div class="form-header">
+              <h4>
+                <span class="bxr bx-package"></span>Stok & Fiyat Bilgileri
+              </h4>
+            </div>
+            <div class="form-divider"></div>
+            <div class="form-input">
+              <label for="current_stock">Mevcut Stok <strong>*</strong></label>
+              <input
+                type="number"
+                min="0"
+                placeholder="0"
+                name="current_stock"
+              />
+              <p>Şu anda depodaki ürün miktarı</p>
+            </div>
+            <div class="form-input">
+              <label for="min_stock"
+                >Minimum Stok Seviyesi <strong>*</strong></label
+              >
+              <input type="number" min="0" placeholder="10" name="min_stock" />
+              <p>Bu seviyenin altında uyarı alırsınız</p>
+            </div>
+            <div class="form-input">
+              <label for="max_stock">Maksimum Stok Seviyesi</label>
+              <input type="number" placeholder="500" min="0" name="max_stock" />
+              <p>Fazla stok uyarısı için (opsiyonel)</p>
+            </div>
+            <div class="form-input">
+              <label for="unit">Birim <strong>*</strong></label>
+              <select name="unit" id="unit">
+                <option value="1">Adet</option>
+                <option value="2">Kilogram (kg)</option>
+                <option value="3">Litre (Lt)</option>
+                <option value="4">Paket</option>
+                <option value="5">Kutu</option>
+                <option value="6">Metre (m)</option>
+              </select>
+            </div>
+            <div class="form-input">
+              <label for="buying">Alış Fiyatı <strong>*</strong></label>
+              <div class="input-group">
+                <div class="input-tag">
+                  <span class="bxr bx-lira"></span>
+                </div>
+                <input type="number" placeholder="0.00" name="buying" min="0" />
+              </div>
+              <p>Tedarikçiden aldığınız fiyat</p>
+            </div>
+            <div class="form-input">
+              <label for="sale">Satış Fiyatı <strong>*</strong></label>
+              <div class="input-group">
+                <div class="input-tag">
+                  <span class="bxr bx-lira"></span>
+                </div>
+                <input type="number" placeholder="0.00" name="sales" min="0" />
+              </div>
+              <p>Müşteriye satış fiyatı</p>
+            </div>
+            <div class="form-input">
+              <label for="kdv">KDV Oranı</label>
+              <div class="input-group">
+                <div class="input-tag">
+                  <span class="bxr bx-percentage"></span>
+                </div>
+                <input type="number" placeholder="0" min="0" name="kdv" />
+              </div>
+            </div>
+            <div class="calculate-zone">
+              <div class="row">
+                <div class="col"><p>Kar Marjı:</p></div>
+                <div class="col"><span class="calc-success">%0</span></div>
+              </div>
+              <div class="row">
+                <div class="col"><p>Birim Kar:</p></div>
+                <div class="col"><span>₺0.00</span></div>
+              </div>
+              <div class="row">
+                <div class="col"><strong>Toplam Envanter Değeri:</strong></div>
+                <div class="col"><span>₺0.00</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="form-grid-item" style="grid-column: span 2 / span 2">
+            <div class="form-header">
+              <h4>
+                <span class="bxr bx-clipboard-detail"></span>Ek Bilgiler
+                (Opsiyonel)
+              </h4>
+            </div>
+            <div class="form-divider"></div>
+            <div class="form-row">
+              <div class="form-input">
+                <label for="supplier">Tedarikçi</label>
+                <input
+                  type="text"
+                  placeholder="Tedarikçi XYZ"
+                  name="supplier"
+                />
+              </div>
+              <div class="form-input">
+                <label for="location">Raf/Depo Konumu</label>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Örn: A12-R3-S5"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-input">
+                <label for="warranty">Garanti Süresi</label>
+                <div class="form-input-row">
+                  <input
+                    type="number"
+                    min="0"
+                    name="warranty"
+                    placeholder="24"
+                  />
+                  <select name="duration" id="duration">
+                    <option value="gun">Gün</option>
+                    <option value="ay">Ay</option>
+                    <option value="yil">Yıl</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-input">
+                <label for="expire">Son Kullanma Tarihi</label>
+                <input type="date" name="expire" class="border-default" />
+              </div>
+            </div>
+            <div class="form-input">
+              <label for="link">Ürün Linki (E-ticaret)</label>
+              <input
+                type="url"
+                name="link"
+                placeholder="https://example.com/urun"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+    </main>
+    <!-- Scripts -->
+    <script src="/assets/js/loading.helper.js"></script>
+    <script src="/assets/js/dragdrop.js"></script>
+  </body>
+</html>

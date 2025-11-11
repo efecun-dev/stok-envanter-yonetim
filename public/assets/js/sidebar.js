@@ -1,4 +1,4 @@
-const icons = document.querySelectorAll(".list-item span");
+const ikonlar = document.querySelectorAll(".list-item span");
 const sidebar = document.getElementById("sidebar");
 const invento = document.querySelector(".sidebar-title");
 const sb_text = document.querySelector(".sidebar-text");
@@ -22,7 +22,7 @@ function toggleSidebar() {
   listItemTexts.forEach((item) => {
     item.classList.toggle("hide");
   });
-  icons.forEach((icon) => {
+  ikonlar.forEach((icon) => {
     icon.classList.toggle("sb-icon-active");
   });
   listItems.forEach((item) => {

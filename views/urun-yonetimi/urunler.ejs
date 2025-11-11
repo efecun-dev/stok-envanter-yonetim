@@ -5,7 +5,7 @@
     <!-- Sidebar -->
     <%- include("../../components/Sidebar", { active: "urunler" }) %>
     <!-- Main -->
-    <div id="dashboard-main">
+    <main id="dashboard-main">
       <div class="products-header">
         <div class="col">
           <div class="row">
@@ -325,13 +325,25 @@
           </div>
           <div class="col">
             <div class="view-toggle">
-              <div class="view-toggle-btn active" data-view="table">
+              <div
+                class="view-toggle-btn active"
+                onclick="vibrate(50)"
+                data-view="table"
+              >
                 <span class="bxr bx-menu"></span>
               </div>
-              <div class="view-toggle-btn" data-view="grid">
+              <div
+                class="view-toggle-btn"
+                onclick="vibrate(50)"
+                data-view="grid"
+              >
                 <span class="bxr bx-table-cells-large"></span>
               </div>
-              <div class="view-toggle-btn" data-view="compact">
+              <div
+                class="view-toggle-btn"
+                onclick="vibrate(50)"
+                data-view="compact"
+              >
                 <span class="bxr bx-chart-bar-columns"></span>
               </div>
             </div>
@@ -385,7 +397,9 @@
                   <p>#BAR123456</p>
                 </div>
               </td>
-              <td><div class="category-badge">Elektronik</div></td>
+              <td>
+                <div class="category-badge" data-label="Cila Ürünleri"></div>
+              </td>
               <td class="stock-cell">
                 <div class="col">
                   <!-- normal, low, critical -->
@@ -424,7 +438,9 @@
                   <p>#BAR789012</p>
                 </div>
               </td>
-              <td><div class="category-badge">Elektronik</div></td>
+              <td>
+                <div class="category-badge" data-label="Araç Aksesuar"></div>
+              </td>
               <td class="stock-cell">
                 <div class="col">
                   <!-- normal, low, critical -->
@@ -465,7 +481,7 @@
           <div class="col">
             <div class="pagination">
               <a class="pg-btn prev-btn disabled"
-                ><span class="bxr bx-chevron-left"></span>Önceki</a
+                ><span class="bxr bx-chevron-left"></span> <i>Önceki</i></a
               >
               <a class="pg-btn active">1</a>
               <a class="pg-btn">2</a>
@@ -475,7 +491,7 @@
               <span class="dots">...</span>
               <a class="pg-btn">63</a>
               <a class="pg-btn next-btn"
-                >Sonraki<span class="bxr bx-chevron-right"></span
+                ><i>Sonraki</i> <span class="bxr bx-chevron-right"></span
               ></a>
             </div>
           </div>
@@ -591,7 +607,7 @@
           <div class="col">
             <div class="pagination">
               <a class="pg-btn prev-btn disabled"
-                ><span class="bxr bx-chevron-left"></span>Önceki</a
+                ><span class="bxr bx-chevron-left"></span> <i>Önceki</i></a
               >
               <a class="pg-btn active">1</a>
               <a class="pg-btn">2</a>
@@ -601,15 +617,17 @@
               <span class="dots">...</span>
               <a class="pg-btn">63</a>
               <a class="pg-btn next-btn"
-                >Sonraki<span class="bxr bx-chevron-right"></span
+                ><i>Sonraki</i> <span class="bxr bx-chevron-right"></span
               ></a>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
     <!-- Scripts -->
     <script src="/assets/js/select.js"></script>
     <script src="/assets/js/viewChanger.js"></script>
+    <script src="/assets/js/generateColorFromStr.js"></script>
+    <script src="/assets/js/vibrate.js"></script>
   </body>
 </html>

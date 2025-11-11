@@ -1143,6 +1143,7 @@ button.loading .spinner {
   border: 1px solid var(--gray-1);
   border-radius: 6px;
   overflow: hidden;
+  overflow-x: auto;
 }
 
 table {
@@ -1250,6 +1251,7 @@ td .col p {
   background: var(--gray-a5);
   color: var(--gray-11);
   font-weight: 600;
+  text-wrap: nowrap;
 }
 
 .stock-cell .col {
@@ -1558,6 +1560,7 @@ td .col p {
 .pagination-container .col p {
   color: var(--gray-9);
   font-size: 0.85rem;
+  text-wrap: nowrap;
 }
 
 .pagination-container .col {
@@ -1650,7 +1653,7 @@ select:hover {
 }
 
 .product-image img {
-  width: 100%;
+  max-height: 200px;
 }
 
 .product-content {
@@ -1899,7 +1902,7 @@ select:hover {
   padding: 8px 12px;
   border-radius: 4px;
   border: 1px solid var(--gray-3);
-  transition: all 0.2s;
+  transition: border-color 0.2s;
   outline: 0;
 }
 
@@ -1909,6 +1912,7 @@ select:hover {
 
 .form-input input:focus {
   border-color: var(--blue-10);
+  box-shadow: 0 0 2px 0 var(--blue-10);
 }
 
 .form-input input:not(:placeholder-shown) {
@@ -2028,4 +2032,81 @@ select:hover {
 
 .border-default {
   border-color: var(--gray-3) !important;
+}
+
+@media only screen and (max-width: 928px) {
+  .filter-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .products-header .col p {
+    font-size: 0.65rem;
+  }
+  .info-box {
+    font-size: 0.65rem;
+  }
+  .product-actions .btn {
+    font-size: 0.65rem;
+  }
+  .products-header {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+  .filter-section .row {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+  .filter-dropdown {
+    flex: 1;
+    min-width: 200px;
+  }
+  .filter-section input {
+    font-size: 0.75rem;
+  }
+
+  table thead tr th {
+    padding: 6px;
+  }
+  table tr * {
+    font-size: 0.65rem;
+  }
+  table td .col p {
+    font-size: 0.55rem;
+  }
+  .category-badge {
+    font-size: 0.65rem;
+  }
+  .pagination-container {
+    flex-direction: column;
+    gap: 10px;
+    align-items: start;
+  }
+  select {
+    padding: 4px 6px;
+  }
+  .pagination-container .col p {
+    font-size: 0.65rem;
+  }
+  .pagination-container .col {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: start;
+  }
+  .pg-btn {
+    font-size: 0.65rem;
+  }
+  .pagination a i {
+    display: none !important;
+  }
+  table tbody tr td {
+    padding: 6px;
+  }
+}
+
+.filter-dd-title span:last-child {
+  margin-left: auto;
 }

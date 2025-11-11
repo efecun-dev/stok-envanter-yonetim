@@ -13,3 +13,15 @@ function generateColorFromString(str) {
     text: `hsl(${hue}, ${saturation}%, 25%)`,
   };
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const badges = document.querySelectorAll(".category-badge");
+
+  badges.forEach((badge) => {
+    var label = badge.dataset.label;
+    var color = generateColorFromString(label);
+    badge.innerHTML = label;
+    badge.style.background = color.background;
+    badge.style.color = color.text;
+  });
+});

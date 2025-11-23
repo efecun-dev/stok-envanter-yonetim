@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%- include("../../components/Head", { title: "Stok Hareketleri" }) %>
+  <body class="light" style="display: flex">
+    <!-- Sidebar -->
+    <%- include("../../components/Sidebar", { active: "hareketler" }) %>
+    <!-- Main -->
+    <main id="dashboard-main">
+      <div class="dash-header">
+        <div class="col">
+          <h2>Stok Hareketleri</h2>
+          <p>Envanter giriş, çıkış ve transfer kayıtları.</p>
+        </div>
+        <div class="col flex-row">
+          <a href="" class="btn"
+            ><span class="bxr bx-archive-arrow-down"></span>Dışa Aktar</a
+          >
+        </div>
+      </div>
+      <div class="dash-divider"></div>
+      <div class="stock-log-container">
+        <div class="stock-log-content flex-2">
+          <div class="log-search">
+            <div class="search-box">
+              <div class="form-input">
+                <input
+                  type="text"
+                  name="search"
+                  placeholder="Ürün, işlem ID veya kullanıcı ara..."
+                />
+              </div>
+            </div>
+            <div class="search-box">
+              <select name="categories">
+                <option value="all" selected>Tüm Kategoriler</option>
+                <option value="1">Elektronik</option>
+                <option value="2">Gıda</option>
+                <option value="3">Giyim</option>
+              </select>
+            </div>
+            <div class="search-box">
+              <select name="last">
+                <option value="7" selected>Son 7 Gün</option>
+                <option value="15">Son 15 Gün</option>
+                <option value="30">Bu ay</option>
+                <option value="90">Son 3 ay</option>
+              </select>
+            </div>
+          </div>
+          <div class="log-grid">
+            <div class="log success">
+              <div class="row">
+                <div class="col">
+                  <div class="stat-pin success">
+                    <div class="circle circle-success"></div>
+                    Giriş
+                  </div>
+                </div>
+                <div class="col">
+                  <p>14:32</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="col">
+                    <h5 class="product-name">iPhone 13 Pro Max</h5>
+                    <p class="barcode-number">#BAR123456</p>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col" style="gap: 4px">
+                  <h6>Miktar</h6>
+                  <span>+50 Adet</span>
+                </div>
+                <div class="col min-w-100" style="gap: 4px">
+                  <h6>Yeni Stok</h6>
+                  <span>53 Adet</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col" style="gap: 4px">
+                  <h6>Tedarikçi</h6>
+                  <span>ABC Company</span>
+                </div>
+                <div class="col min-w-100" style="gap: 4px">
+                  <h6 data-label="İrsaliye"></h6>
+                  <span class="copy">IRS-2025-001</span>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col">
+                  <h4 class="staff-name">Murat Keskin</h4>
+                </div>
+                <div class="col">
+                  <div class="act-btn">
+                    <span class="bxr bx-dots-vertical"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="log danger">
+              <div class="row">
+                <div class="col">
+                  <div class="stat-pin danger">
+                    <div class="circle circle-danger"></div>
+                    Çıkış
+                  </div>
+                </div>
+                <div class="col">
+                  <p>13:11</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="col">
+                    <h5 class="product-name">Samsung QLED TV</h5>
+                    <p class="barcode-number">#BAR674534</p>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col" style="gap: 4px">
+                  <h6>Miktar</h6>
+                  <span>-12 Adet</span>
+                </div>
+                <div class="col min-w-100" style="gap: 4px">
+                  <h6>Yeni Stok</h6>
+                  <span>8 Adet</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col" style="gap: 4px">
+                  <h6>Tedarikçi</h6>
+                  <span>TED Company</span>
+                </div>
+                <div class="col min-w-100" style="gap: 4px">
+                  <h6 data-label="Fatura"></h6>
+                  <span class="copy">FTR-2025-012</span>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col">
+                  <h4 class="staff-name">Murat Keskin</h4>
+                </div>
+                <div class="col">
+                  <div class="act-btn">
+                    <span class="bxr bx-dots-vertical"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="stock-log-content">
+          <div class="widget">
+            <div class="widget-header">
+              <span class="bxr bx-chart-bar-columns"></span>İstatistikler
+            </div>
+            <div class="row">
+              <div class="col">Bu Ay Giriş</div>
+              <div class="col">
+                234
+                <strong class="success"
+                  ><span class="bxr bx-arrow-up"></span>12%</strong
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">Bu Ay Çıkış</div>
+              <div class="col">
+                189
+                <strong class="danger"
+                  ><span class="bxr bx-arrow-down"></span>8%</strong
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">Net Değişim</div>
+              <div class="col">+45</div>
+            </div>
+            <div class="row">
+              <div class="col">Toplam Hareket</div>
+              <div class="col">2,847</div>
+            </div>
+          </div>
+          <div class="widget">
+            <div class="widget-header">
+              <span class="bxr bx-filter"></span>Hızlı Filtreler
+            </div>
+            <div class="filter-list">
+              <a class="filter-item selected"
+                >Tümü<span class="ct-tab-pin">327</span></a
+              >
+              <a class="filter-item">
+                <span class="bxr bx-arrow-in-down-square-half"></span>Sadece
+                Giriş
+                <span class="ct-tab-pin">234</span>
+              </a>
+              <a class="filter-item">
+                <span class="bxr bx-arrow-out-up-square-half"></span>Sadece
+                Çıkış
+                <span class="ct-tab-pin">189</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Scripts -->
+    <script src="/assets/js/copy.js"></script>
+  </body>
+</html>

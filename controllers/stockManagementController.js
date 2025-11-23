@@ -9,3 +9,7 @@ exports.getStockAdd = (req, res) => {
 exports.getStockRemove = (req, res) => {
   res.render("stok-islemleri/stok-cikisi");
 };
+
+exports.getStockLogs = (req, res) => {
+  res.render("stok-islemleri/stok-hareketleri");
+};

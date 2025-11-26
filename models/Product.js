@@ -49,6 +49,18 @@ class Product {
       throw err;
     }
   }
+
+  static async getCritical() {
+    try {
+      const [rows] = await db.query(
+        "SELECT * FROM urunler WHERE mevcut_stok <= min_stok"
+      );
+      return rows.map((row) => new Product(row));
+    } catch (err) {
+      console.error("Product.getCritical hata: ", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Product;

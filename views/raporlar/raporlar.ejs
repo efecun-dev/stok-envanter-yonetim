@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Head -->
+  <%- include("../../components/Head", { title: "Raporlar" }) %>
+  <body class="light" style="display: flex">
+    <!-- Sidebar -->
+    <%- include("../../components/Sidebar", { active: "raporlar" }) %>
+    <!-- Main -->
+    <main id="dashboard-main">
+      <div class="dash-header">
+        <div class="col">
+          <h2>Raporlar</h2>
+          <p>Detaylı analiz ve raporlar oluşturun</p>
+        </div>
+        <div class="col flex-row">
+          <a href="" class="btn"
+            ><span class="bxr bx-cog"></span>Rapor Ayarları</a
+          >
+          <a href="" class="btn btn-primary"
+            ><span class="bxr bx-plus"></span>Özel Rapor Oluştur</a
+          >
+        </div>
+      </div>
+      <div class="dash-divider"></div>
+      <div class="rep-filter">
+        <div class="col">
+          <h5>Tarih Aralığı:</h5>
+          <a href="" class="date-preset-btn">Bugün</a>
+          <a href="" class="date-preset-btn">Bu Hafta</a>
+          <a href="" class="date-preset-btn active">Bu Ay</a>
+          <a href="" class="date-preset-btn">Son 3 Ay</a>
+          <a href="" class="date-preset-btn">Bu Yıl</a>
+        </div>
+        <div class="col">
+          <form action="" method="post">
+            <div class="form-input">
+              <input type="date" /> - <input type="date" />
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="report-flexbox">
+        <div class="report-card">
+          <div class="col">
+            <div class="report-head">
+              ₺2.4M
+              <div class="stat-pin success">+12%</div>
+            </div>
+            <p>Toplam Envanter Değeri</p>
+          </div>
+          <div class="col">
+            <div class="flexbox-icon bxr" data-icon="chart-bar-columns"></div>
+          </div>
+        </div>
+        <div class="report-card">
+          <div class="col">
+            <div class="report-head">
+              1,247
+              <div class="stat-pin success">+23%</div>
+            </div>
+            <p>Toplam Giriş</p>
+          </div>
+          <div class="col">
+            <div
+              class="flexbox-icon bxr"
+              data-icon="arrow-in-down-square-half"
+            ></div>
+          </div>
+        </div>
+        <div class="report-card">
+          <div class="col">
+            <div class="report-head">
+              892
+              <div class="stat-pin danger">-8%</div>
+            </div>
+            <p>Toplam Çıkış</p>
+          </div>
+          <div class="col">
+            <div
+              class="flexbox-icon bxr"
+              data-icon="arrow-out-up-square-half"
+            ></div>
+          </div>
+        </div>
+        <div class="report-card">
+          <div class="col">
+            <div class="report-head">
+              %28
+              <div class="stat-pin success">+15%</div>
+            </div>
+            <p>Ortalama Kar Marjı</p>
+          </div>
+          <div class="col">
+            <div class="flexbox-icon bxr" data-icon="chart-trend"></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-container">
+        <div class="chart-box">
+          <div class="chart-header">
+            <span class="bxr bx-chart-line"></span>
+            Stok Değeri Grafiği
+          </div>
+          <div class="chart" id="stockValueChart"></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-header">
+            <span class="bxr bx-chart-bar-big-rows"></span>
+            Kategori Dağılımı
+          </div>
+          <div class="chart" id="categoryChart"></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-header">
+            <span class="bxr bx-candlestick"></span>
+            Giriş - Çıkış Karşılaştırma
+          </div>
+          <div class="chart" id="inOutChart"></div>
+        </div>
+        <div class="chart-box">
+          <div class="chart-header">
+            <span class="bxr bx-trophy"></span>
+            En Çok Satan Ürünler
+          </div>
+          <div class="chart" id="mostSellerChart"></div>
+        </div>
+      </div>
+      <div class="templates-section">
+        <div class="template-box">
+          <div class="template-icon">
+            <span class="bxr bx-chart-bar-columns"></span>
+          </div>
+          <div class="template-title">Aylık Envanter Raporu</div>
+          <div class="template-description">
+            Detaylı stok durumu, giriş/çıkış özeti ve değer analizi
+          </div>
+          <a href="" class="btn btn-primary center">
+            <span class="bxr bx-arrow-in-down-square-half"></span>
+            Rapor Oluştur
+          </a>
+        </div>
+        <div class="template-box">
+          <div class="template-icon">
+            <span class="bxr bx-trending-up"></span>
+          </div>
+          <div class="template-title">Karlılık Analizi</div>
+          <div class="template-description">
+            Ürün bazlı kar marjı, satış performansı ve gelir raporu
+          </div>
+          <a href="" class="btn btn-primary center">
+            <span class="bxr bx-arrow-in-down-square-half"></span>
+            Rapor Oluştur
+          </a>
+        </div>
+        <div class="template-box">
+          <div class="template-icon">
+            <span class="bxr bx-alert-triangle"></span>
+          </div>
+          <div class="template-title">Kritik Stok Raporu</div>
+          <div class="template-description">
+            Düşük stok uyarıları, sipariş önerileri ve risk analizi
+          </div>
+          <a href="" class="btn btn-primary center">
+            <span class="bxr bx-arrow-in-down-square-half"></span>
+            Rapor Oluştur
+          </a>
+        </div>
+        <div class="template-box">
+          <div class="template-icon">
+            <span class="bxr bx-chart-line"></span>
+          </div>
+          <div class="template-title">Trend Analizi</div>
+          <div class="template-description">
+            Satış trend'leri, tahmin modelleri ve sezonluk analiz
+          </div>
+          <a href="" class="btn btn-primary center">
+            <span class="bxr bx-arrow-in-down-square-half"></span>
+            Rapor Oluştur
+          </a>
+        </div>
+        <div class="template-box">
+          <div class="template-icon">
+            <span class="bxr bx-business"></span>
+          </div>
+          <div class="template-title">Tedarikçi Raporu</div>
+          <div class="template-description">
+            Tedarikçi bazlı alım analizi ve performans değerlendirme
+          </div>
+          <a href="" class="btn btn-primary center">
+            <span class="bxr bx-arrow-in-down-square-half"></span>
+            Rapor Oluştur
+          </a>
+        </div>
+      </div>
+      <div class="last-created-section">
+        <div class="table-section">
+          <h3><span class="bxr bx-history"></span> Son Oluşturulan Tablolar</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Rapor Adı</th>
+                <th>Tip</th>
+                <th>Tarih Aralığı</th>
+                <th>Oluşturulma</th>
+                <th>Boyut</th>
+                <th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="last-title">Kasım 2024 Envanter Raporu</td>
+                <td><div class="stat-pin excel">Excel</div></td>
+                <td class="op-text">01.11.2024 - 30.11.2024</td>
+                <td class="op-text">20.11.2024 14:32</td>
+                <td class="op-text">2.4 MB</td>
+                <td>
+                  <div class="actions-cell">
+                    <a href="" class="action-btn"
+                      ><span class="bxr bx-arrow-to-bottom-stroke"></span
+                    ></a>
+                    <a href="" class="action-btn delete"
+                      ><span class="bxr bx-trash"></span
+                    ></a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td class="last-title">Kritik Stok Uyarı Raporu</td>
+                <td><div class="stat-pin pdf">PDF</div></td>
+                <td class="op-text">Anlık</td>
+                <td class="op-text">19.11.2024 10:15</td>
+                <td class="op-text">486 KB</td>
+                <td>
+                  <div class="actions-cell">
+                    <a href="" class="action-btn"
+                      ><span class="bxr bx-arrow-to-bottom-stroke"></span
+                    ></a>
+                    <a href="" class="action-btn delete"
+                      ><span class="bxr bx-trash"></span
+                    ></a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <!-- Scripts -->
+    <script src="/assets/js/generateColorFromStr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="/assets/js/charts/stockValue.js"></script>
+    <script src="/assets/js/charts/categoryChart.js"></script>
+    <script src="/assets/js/charts/inOut.js"></script>
+    <script src="/assets/js/charts/mostSeller.js"></script>
+  </body>
+</html>

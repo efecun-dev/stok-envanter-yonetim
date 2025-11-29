@@ -8,7 +8,7 @@
     <!-- Sidebar -->
     <%- include("../../components/Sidebar", { active: "urunler" }) %>
     <!-- Main -->
-    <form action="/urun-yonetimi/urunler" method="get" class="filter-form">
+    <form action="/urun-yonetimi/urunler" method="get" class="form">
       <main id="dashboard-main">
         <div class="products-header">
           <div class="col">
@@ -539,7 +539,7 @@
                 </div>
               </div>
               <div class="product-image">
-                <img src="/assets/products/<%= item.resim_url %>" />
+                <img src="<%= item.resim_url %>" />
               </div>
               <div class="product-content">
                 <a href=""><%= item.urun_adi %></a>
@@ -598,7 +598,7 @@
                 <td class="checkbox-cell"><input type="checkbox" /></td>
                 <td>
                   <div class="table-image">
-                    <img src="/assets/products/<%= item.resim_url %>" alt="" />
+                    <img src="<%= item.resim_url %>" alt="" />
                   </div>
                 </td>
                 <td>

@@ -1877,22 +1877,40 @@ select:hover {
 }
 
 .dropzone {
-  width: 100%;
-  padding: 50px;
-  border: 2px dashed var(--gray-6);
-  border-radius: 8px;
+  border: 2px dashed #ccc;
+  padding: 1rem;
   text-align: center;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.dropzone:hover {
-  border-color: var(--blue-10);
+  border-radius: 8px;
 }
 
 .dropzone.dragover {
-  border-color: var(--blue-12);
-  background: var(--primary-2);
+  border-color: #4f46e5;
+  background: #eef;
+}
+
+.image-preview {
+  max-width: 100%;
+  max-height: 150px;
+  margin-top: 0.5rem;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.upload-progress {
+  width: 100%;
+  height: 6px;
+  background: #eee;
+  border-radius: 999px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+
+.upload-progress-bar {
+  width: 0;
+  height: 100%;
+  background: #4f46e5;
+  transition: width 0.1s linear;
 }
 
 .form-header h4 {
@@ -3466,7 +3484,7 @@ a.filter-item.selected .ct-tab-pin {
   font-size: 1.2rem;
 }
 
-form.filter-form {
+form.form {
   width: 100%;
   display: flex;
 }

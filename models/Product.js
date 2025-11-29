@@ -240,6 +240,41 @@ class Product {
     const [rows] = await db.query(query);
     return rows;
   }
+
+  static async addProduct(data) {
+    const sql = `
+    INSERT INTO urunler
+      (urun_adi, kategori_id, barkod, sku, aciklama, resim_url,
+       mevcut_stok, min_stok, max_stok, birim_id, alis_fiyati,
+       satis_fiyati, kdv, tedarikci, raf_konumu, garanti,
+       son_kullanma_tarihi, urun_link, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+
+    const values = [
+      data.urun_adi,
+      data.kategori_id,
+      data.barkod,
+      data.sku,
+      data.aciklama,
+      data.resim_url,
+      data.mevcut_stok,
+      data.min_stok,
+      data.max_stok,
+      data.birim_id,
+      data.alis_fiyati,
+      data.satis_fiyati,
+      data.kdv,
+      data.tedarikci,
+      data.raf_konumu,
+      data.garanti,
+      data.son_kullanma_tarihi,
+      data.urun_link,
+      data.created_at,
+    ];
+
+    return db.query(sql, values);
+  }
 }
 
 module.exports = Product;

@@ -1,5 +1,6 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
+const Units = require("../models/Units");
 
 exports.getProducts = async (req, res) => {
   const categoryStats = await Category.getCategoryStats();
@@ -83,8 +84,58 @@ exports.getProducts = async (req, res) => {
   });
 };
 
-exports.getAddProduct = (req, res) => {
-  res.render("urun-yonetimi/urun-ekle");
+exports.getAddProduct = async (req, res) => {
+  const categories = await Category.getAllCategories();
+  const units = await Units.getUnits();
+  res.render("urun-yonetimi/urun-ekle", { categories, units });
+};
+
+exports.postAddProduct = async (req, res) => {
+  try {
+    const { file } = req;
+    const body = req.body;
+
+    // Dosya geldiyse resim_url oluştur
+    let resim_url = null;
+    if (file) {
+      // Örn: /uploads/products/product-123123123.jpg
+      resim_url = `/assets/products/${file.filename}`;
+    }
+
+    const data = {
+      urun_adi: body.urun_adi,
+      kategori_id: body.kategori_id,
+      barkod: body.barkod,
+      sku: body.sku,
+      aciklama: body.aciklama,
+      mevcut_stok: body.mevcut_stok,
+      min_stok: body.min_stok,
+      max_stok: body.max_stok,
+      birim_id: body.birim_id,
+      alis_fiyati: body.alis_fiyati,
+      satis_fiyati: body.satis_fiyati,
+      kdv: body.kdv,
+      tedarikci: body.tedarikci,
+      raf_konumu: body.raf_konumu,
+      garanti: body.garanti,
+      son_kullanma_tarihi: body.son_kullanma_tarihi,
+      urun_link: body.urun_link,
+      resim_url,
+    };
+
+    const addProcess = await Product.addProduct(data);
+
+    if (addProcess) {
+      console.log("Ürün ekleme işlemi başarılı");
+    } else {
+      console.log("Ürün ekleme işlemi başarısız");
+    }
+
+    res.redirect("/urun-yonetimi/yeni-urun");
+  } catch (err) {
+    console.error("Ürün ekleme hatası:", err);
+    res.redirect("/urun-yonetimi/yeni-urun");
+  }
 };
 
 exports.getCategories = (req, res) => {

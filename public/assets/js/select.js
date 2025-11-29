@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const filterForm = document.querySelector(".filter-form");
+  const filterForm = document.querySelector(".form");
   if (!filterForm) return;
 
   // FİYAT HIZLI SEÇİM kısmı (daha önce yazdığımız)
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  const filterForm = document.querySelector(".filter-form");
+  const filterForm = document.querySelector(".form");
   if (!filterForm) return;
 
   const searchInput = filterForm.querySelector('input[name="productSearch"]');

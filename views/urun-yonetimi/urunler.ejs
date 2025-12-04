@@ -653,13 +653,17 @@
         <%- include("../../components/Pagination") %>
       </main>
     </form>
+    <!-- Modals -->
+    <div class="modal-container hidden">
+      <%- include("../../components/editProduct") %>
+    </div>
     <!-- Scripts -->
     <script src="/assets/js/select.js"></script>
     <script src="/assets/js/viewChanger.js"></script>
     <script src="/assets/js/generateColorFromStr.js"></script>
     <script src="/assets/js/vibrate.js"></script>
     <script src="/assets/js/selectAll.js"></script>
-    <script src="/assets/js/actionBar.js"></script>
     <script src="/assets/js/tableInp.js"></script>
+    <script src="/assets/js/modals/editProduct.js" type="module"></script>
   </body>
 </html>

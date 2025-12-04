@@ -139,6 +139,28 @@ exports.postAddProduct = async (req, res) => {
   }
 };
 
+exports.postEditProduct = async (req, res) => {
+  try {
+    const { urun_adi, sku, kategori_id, mevcut_stok, alis_fiyati } = req.body;
+    const id = req.params.id;
+    await Product.updateProduct(id, {
+      urun_adi,
+      sku,
+      kategori_id,
+      mevcut_stok,
+      alis_fiyati,
+    });
+    req.session.alert = {
+      type: "success",
+      message: "Ürün başarılı bir şekilde düzenlendi.",
+    };
+    res.redirect("/urun-yonetimi/urunler");
+  } catch (err) {
+    console.error("Ürün düzenleme hatası:", err);
+    res.redirect("/urun-yonetimi/urunler");
+  }
+};
+
 exports.getCategories = async (req, res) => {
   const mostMovement = await Logs.getMostMovement();
   const lastAdded = await Category.getLastAdded();
@@ -156,6 +178,10 @@ exports.getCategories = async (req, res) => {
 exports.postAddCategory = async (req, res) => {
   const { kategori_adi, aciklama } = req.body;
   await Category.addCategory(kategori_adi, aciklama);
+  req.session.alert = {
+    type: "success",
+    message: "Kategori başarılı bir şekilde eklendi",
+  };
   res.redirect("/urun-yonetimi/kategoriler");
 };
 

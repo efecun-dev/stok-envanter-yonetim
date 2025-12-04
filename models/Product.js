@@ -275,6 +275,46 @@ class Product {
 
     return db.query(sql, values);
   }
+
+  static async getProduct(id) {
+    try {
+      let sql = "SELECT * FROM urunler WHERE id = ?";
+      const [[row]] = await db.query(sql, [id]);
+      return row;
+    } catch (err) {
+      console.error("Product.getProduct hata: ", err);
+      throw err;
+    }
+  }
+
+  static async updateProduct(id, data) {
+    try {
+      const fields = [];
+      const values = [];
+
+      Object.entries(data).forEach(([key, value]) => {
+        fields.push(`${key} = ?`);
+        values.push(value);
+      });
+
+      if (fields.length === 0) {
+        throw new Error("Güncellenecek alan yok");
+      }
+      values.push(id);
+      const sql = `
+      UPDATE urunler
+      SET ${fields.join(", ")}
+      WHERE id = ?
+    `;
+
+      const [result] = await db.query(sql, values);
+
+      return result;
+    } catch (err) {
+      console.error("Product.updateProduct hata:", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Product;

@@ -10,6 +10,7 @@ const dashboardRouter = require("./routes/dashboard");
 const productManagementRouter = require("./routes/product-management");
 const stockManagementRouter = require("./routes/stock-management");
 const reportsRouter = require("./routes/reports");
+const apiRouter = require("./routes/api");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -70,6 +71,7 @@ app.use("/", dashboardRouter);
 app.use("/urun-yonetimi", productManagementRouter);
 app.use("/stok-islemleri", stockManagementRouter);
 app.use("/raporlar", reportsRouter);
+app.use("/api", apiRouter);
 
 app.listen(process.env.PORT, () => {
   console.log("WEB | Aktif | " + process.env.PORT);

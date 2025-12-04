@@ -7,6 +7,11 @@ router.get("/urunler", productManagementController.getProducts);
 router.get("/urunler/search", productManagementController.ajaxSearchProducts);
 
 router.post(
+  "/urunler/duzenle/:id",
+  productManagementController.postEditProduct
+);
+
+router.post(
   "/yeni-urun",
   upload.single("urun_resmi"),
   productManagementController.postAddProduct

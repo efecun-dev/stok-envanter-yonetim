@@ -1364,64 +1364,15 @@ td .col p {
   cursor: pointer;
   padding: 6px;
   font-size: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-11);
 }
 
-.action-bar {
-  position: absolute;
-  right: 0;
-  top: calc(100% + 6px);
-  background: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: none;
-  z-index: 9999;
-  min-width: 80px;
-  overflow: hidden;
-  animation: actBar 0.2s ease-in-out;
-}
-
-@keyframes actBar {
-  0% {
-    transform: translateY(10px);
-  }
-}
-
-/* Yukarı açılması gerektiğinde */
-.action-bar.open-up {
-  top: auto;
-  bottom: calc(100% + 6px);
-}
-
-/* Menü içerikleri */
-.action-bar a {
-  display: block;
-  padding: 8px 12px;
-  color: #333;
-  text-decoration: none;
-  text-align: center;
-  transition: all 0.2s;
-}
-.action-bar a:hover {
-  background: #f5f5f5;
-}
-
-.action-bar .delete-btn {
-  background: rgb(255, 73, 73);
-  color: var(--gray-1);
-}
-
-.action-bar .delete-btn:hover {
-  background: rgb(237, 0, 0);
-}
-
-.action-bar .edit-btn {
-  background: rgb(73, 121, 255);
-  color: var(--gray-1);
-}
-
-.action-bar .edit-btn:hover {
-  background: rgb(38, 96, 255);
+.act-btn:hover {
+  background: var(--gray-a3);
 }
 
 .filter-dd-content {
@@ -1433,6 +1384,10 @@ td .col p {
   display: none;
   z-index: 999;
   animation: dropdown 0.25s ease-in-out;
+}
+
+a.act-btn:hover {
+  text-decoration: none !important;
 }
 
 .dd-container {
@@ -3642,6 +3597,7 @@ form.form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 }
 
 .modal-inp-row {
@@ -3659,6 +3615,7 @@ form.form {
   resize: vertical;
   background: var(--blue-a1);
   transition: all 0.1s;
+  width: 100%;
 }
 
 .modal-inp-row input:hover,
@@ -3686,6 +3643,21 @@ form.form {
   font-size: 0.85rem;
   color: var(--blue-11);
   font-weight: 400;
+}
+
+.modal-inp-row select {
+  background: var(--blue-a1);
+  border: 1px solid var(--gray-7);
+  transition: all 0.1s;
+}
+
+.modal-inp-row select:focus {
+  background: var(--blue-a1);
+  border: 1px solid var(--blue-10);
+}
+
+.modal-inp-row select:not(:placeholder-shown) {
+  border-color: var(--blue-10);
 }
 
 /* Alerts */

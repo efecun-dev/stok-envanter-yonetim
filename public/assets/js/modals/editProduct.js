@@ -11,7 +11,6 @@ buttons.forEach((btn) => {
 
     const categoriesRes = await fetch(`${url}/api/kategoriler`);
     const categories = await categoriesRes.json();
-    console.log(categories);
     const categoryOptions = categories
       .map(
         (cat) =>
@@ -20,8 +19,6 @@ buttons.forEach((btn) => {
           }>${cat.kategori_adi}</option>`
       )
       .join("");
-
-    console.log(categoryOptions);
     modal = document.createElement("div");
     modal.className = "modal-container";
     modal.innerHTML = `

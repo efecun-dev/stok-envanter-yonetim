@@ -486,6 +486,7 @@
             </div>
           </div>
         </div>
+        <% if (products.length > 0) { %>
         <!-- Tablo Görünümü -->
         <div class="table-section table-view">
           <div class="table-scroll">
@@ -650,13 +651,13 @@
             </tbody>
           </table>
         </div>
-        <%- include("../../components/Pagination") %>
+        <%- include("../../components/Pagination") %> <% } else { %>
+        <div class="no-data">
+          <img src="/assets/svg/no_data.svg" />
+        </div>
+        <% } %>
       </main>
     </form>
-    <!-- Modals -->
-    <div class="modal-container hidden">
-      <%- include("../../components/editProduct") %>
-    </div>
     <!-- Scripts -->
     <script src="/assets/js/select.js"></script>
     <script src="/assets/js/viewChanger.js"></script>

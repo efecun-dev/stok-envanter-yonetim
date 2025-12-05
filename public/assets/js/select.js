@@ -91,7 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const formData = new FormData(filterForm);
       const params = new URLSearchParams(formData);
 
-      // Arama yaparken sayfayı 1'e çek
       params.set("page", "1");
 
       fetch(`/urun-yonetimi/urunler/search?${params.toString()}`)
@@ -99,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then((data) => {
           if (data.html !== undefined) {
             tbody.innerHTML = data.html;
-            // renkler vs için yeniden init gerekirse burada çağır
             if (window.initCategoryBadges) {
               window.initCategoryBadges();
             }
@@ -108,6 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch((err) => {
           console.error("Arama hatası:", err);
         });
-    }, 300); // debounce 300ms
+    }, 300);
   });
 });

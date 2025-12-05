@@ -70,7 +70,13 @@
             <span class="bxr bx-chart-bar-columns"></span>Kategori Bazlı Stok
             Dağılımı
           </h3>
+          <% if (categoryStats.length > 0) { %>
           <div class="chart" id="categoryChart"></div>
+          <% } else { %>
+          <div class="no-data">
+            <img src="/assets/svg/no_data.svg" />
+          </div>
+          <% } %>
         </div>
         <div class="grid-item">
           <h3>
@@ -86,7 +92,7 @@
             <a href="">Tümünü gör <span class="bxr bx-arrow-right"></span></a>
           </h3>
           <div class="critical-container">
-            <% criticals.map((item) => { %>
+            <% if (criticals.length > 0) { %> <% criticals.map((item) => { %>
             <div class="cr-item">
               <div class="row">
                 <div class="col">
@@ -104,7 +110,11 @@
                 %>
               </div>
             </div>
-            <% }) %>
+            <% }) %> <% } else { %>
+            <div class="no-data">
+              <img src="/assets/svg/no_data.svg" />
+            </div>
+            <% } %>
           </div>
         </div>
         <div class="grid-item">
@@ -114,6 +124,7 @@
             <a href="">Tümünü gör<span class="bxr bx-arrow-right"></span></a>
           </h3>
           <div class="last-container">
+            <% if (last5Logs.length > 0) { %>
             <div class="timeline-line"></div>
             <div class="last-list">
               <% last5Logs.map((item) => { %>
@@ -137,6 +148,11 @@
               </div>
               <% }) %>
             </div>
+            <% } else { %>
+            <div class="no-data">
+              <img src="/assets/svg/no_data.svg" />
+            </div>
+            <% } %>
           </div>
         </div>
         <div class="grid-item flex-2">
@@ -156,7 +172,9 @@
               </div>
             </div>
             <% }) %> <% } else { %>
-            <p>Son 1 ayda ürün hareketi bulunamadı.</p>
+            <div class="no-data">
+              <img src="/assets/svg/no_data.svg" />
+            </div>
             <% } %>
           </div>
         </div>

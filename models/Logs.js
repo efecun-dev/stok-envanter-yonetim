@@ -1,4 +1,10 @@
 const db = require("../config/database");
+const dayjs = require("dayjs");
+const relativeTime = require("dayjs/plugin/relativeTime");
+require("dayjs/locale/tr");
+
+dayjs.extend(relativeTime);
+dayjs.locale("tr");
 
 class Logs {
   constructor(row) {
@@ -98,6 +104,34 @@ class Logs {
       console.error("Logs.getMostMovement hata: ", err);
       throw err;
     }
+  }
+
+  static async getLastEntriesForProducts(productIds) {
+    if (!productIds || productIds.length === 0) return {};
+
+    const placeholders = productIds.map(() => "?").join(",");
+
+    const [rows] = await db.query(
+      `
+      SELECT urun_id, MAX(created_at) AS created_at
+      FROM hareketler
+      WHERE hareket_turu = 'giris'
+        AND urun_id IN (${placeholders})
+      GROUP BY urun_id
+      `,
+      productIds
+    );
+
+    const result = {};
+
+    rows.forEach((row) => {
+      result[row.urun_id] = {
+        created_at: row.created_at,
+        relative_time: dayjs(row.created_at).fromNow(),
+      };
+    });
+
+    return result;
   }
 }
 

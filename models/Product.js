@@ -69,6 +69,38 @@ class Product {
     }
   }
 
+  static async getLowest() {
+    try {
+      let sql = `SELECT * FROM urunler WHERE mevcut_stok <= min_stok / 2`;
+      const [rows] = await db.query(sql);
+      return rows.map((row) => new Product(row));
+    } catch (err) {
+      console.error("Product.getLowest hata: ", err);
+      throw err;
+    }
+  }
+  static async getLow() {
+    try {
+      let sql = `SELECT * FROM urunler WHERE mevcut_stok <= min_stok AND mevcut_stok > min_stok / 2`;
+      const [rows] = await db.query(sql);
+      return rows.map((row) => new Product(row));
+    } catch (err) {
+      console.error("Product.getLow hata: ", err);
+      throw err;
+    }
+  }
+
+  static async getNormal() {
+    try {
+      let sql = `SELECT * FROM urunler WHERE mevcut_stok > min_stok`;
+      const [rows] = await db.query(sql);
+      return rows.map((row) => new Product(row));
+    } catch (err) {
+      console.error("Product.getNormal hata: ", err);
+      throw err;
+    }
+  }
+
   static async getPaginated(
     page = 1,
     limit = 20,
@@ -92,7 +124,6 @@ class Product {
     const whereClauses = [];
     const params = [];
 
-    // 🔹 Stok filtresi
     if (selectedStock && selectedStock.length > 0) {
       const stockSqlParts = [];
 
@@ -118,14 +149,12 @@ class Product {
       }
     }
 
-    // 🔹 Kategori filtresi
     if (categories && categories.length > 0) {
       const placeholders = categories.map(() => "?").join(",");
       whereClauses.push(`u.kategori_id IN (${placeholders})`);
       params.push(...categories);
     }
 
-    // 🔹 Fiyat filtresi
     const min =
       minPrice !== undefined && minPrice !== "" ? Number(minPrice) : null;
     const max =
@@ -141,7 +170,6 @@ class Product {
       params.push(max);
     }
 
-    // 🔹 Arama filtresi (ürün adı, sku, barkod, açıklama)
     if (search && search.trim() !== "") {
       const like = `%${search.trim()}%`;
       whereClauses.push(
@@ -154,7 +182,6 @@ class Product {
       ? `WHERE ${whereClauses.join(" AND ")}`
       : "";
 
-    // 🔹 Toplam kayıt
     const countSql = `
     SELECT COUNT(*) AS total
     FROM urunler u
@@ -163,7 +190,6 @@ class Product {
     const [countRows] = await db.query(countSql, params);
     const total = countRows[0].total;
 
-    // 🔹 Sıralama
     let orderBySql = "u.created_at DESC";
 
     switch (sort) {
@@ -325,6 +351,39 @@ class Product {
       console.error("Product.deleteProduct hata:", err);
       throw err;
     }
+  }
+
+  static async getFiltered({ category, sort }) {
+    let sql = "SELECT * FROM urunler WHERE 1=1";
+    const params = [];
+
+    if (category) {
+      sql += " AND kategori_id = ?";
+      params.push(category);
+    }
+
+    if (sort === "lower") {
+      sql += " ORDER BY mevcut_stok ASC";
+    } else if (sort === "upper") {
+      sql += " ORDER BY mevcut_stok DESC";
+    } else if (sort === "asc") {
+      sql += " ORDER BY urun_adi ASC";
+    } else if (sort === "desc") {
+      sql += " ORDER BY urun_adi DESC";
+    } else {
+      sql += `
+      ORDER BY 
+        CASE 
+          WHEN mevcut_stok <= min_stok / 2 THEN 0
+          WHEN mevcut_stok <= min_stok THEN 1
+          ELSE 2
+        END,
+        urun_adi ASC
+    `;
+    }
+
+    const [rows] = await db.query(sql, params);
+    return rows;
   }
 }
 

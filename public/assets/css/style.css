@@ -2240,7 +2240,7 @@ select:hover {
 
 .category-flex-item {
   flex: 1;
-  min-width: 250px;
+  min-width: 300px;
   border: 1px solid var(--gray-5);
   padding: 15px;
   border-radius: 6px;
@@ -2264,7 +2264,7 @@ select:hover {
 .category-flex-item .col h4 {
   font-size: 1.1rem;
   color: var(--blue-12);
-  width: 150px;
+  width: 200px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2290,6 +2290,12 @@ select:hover {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  justify-content: space-between;
+}
+
+.top-divider {
+  border-top: 1px solid var(--gray-3);
+  padding-top: 10px;
 }
 
 .category-box::before {
@@ -2760,6 +2766,10 @@ select:hover {
 
 h6.success {
   color: #10b981 !important;
+}
+
+h6.danger {
+  color: #ff4023 !important;
 }
 
 .info-section {
@@ -3752,4 +3762,27 @@ form.form {
 .cancel-btn {
   background: #f04a4a;
   color: white;
+}
+
+/* No Data */
+
+.no-data {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 20px;
+  margin: auto;
+}
+
+.no-data img {
+  width: 50%;
+}
+
+.no-data p {
+  color: var(--blue-a7);
+  font-weight: 400;
+  font-size: 1rem;
 }

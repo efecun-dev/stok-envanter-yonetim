@@ -142,7 +142,14 @@ exports.postAddProduct = async (req, res) => {
 
 exports.postEditProduct = async (req, res) => {
   try {
-    const { urun_adi, sku, kategori_id, mevcut_stok, alis_fiyati } = req.body;
+    const {
+      urun_adi,
+      sku,
+      kategori_id,
+      mevcut_stok,
+      alis_fiyati,
+      satis_fiyati,
+    } = req.body;
     const id = req.params.id;
     await Product.updateProduct(id, {
       urun_adi,
@@ -150,6 +157,7 @@ exports.postEditProduct = async (req, res) => {
       kategori_id,
       mevcut_stok,
       alis_fiyati,
+      satis_fiyati,
     });
     req.session.alert = {
       type: "success",

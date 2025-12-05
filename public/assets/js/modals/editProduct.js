@@ -49,6 +49,10 @@ buttons.forEach((btn) => {
               <label for='alis_fiyati'>Alış fiyatı</label>
               <input type='text' name='alis_fiyati' value='${data.alis_fiyati}' required placeholder='' />
             </div>
+            <div class='modal-inp-row'>
+              <label for='satis_fiyati'>Satış fiyatı</label>
+              <input type='text' name='satis_fiyati' value='${data.satis_fiyati}' required placeholder='' />
+            </div>
             <button type='submit' class='btn btn-primary center'>Kaydet</button>
           </form>
         </div>

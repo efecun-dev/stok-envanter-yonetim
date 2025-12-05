@@ -66,6 +66,7 @@
           </div>
         </div>
       </div>
+      <% if (categories.length > 0) { %>
       <div class="category-grid">
         <% categories.forEach((ctg) => { %>
         <div class="category-box" data-label="<%= ctg.kategori_adi %>">
@@ -88,8 +89,7 @@
             ></h4>
             <p class="description"><%= ctg.aciklama %></p>
           </div>
-          <div class="ctg-divider"></div>
-          <div class="row column">
+          <div class="row column top-divider">
             <div class="col">
               <p>Ürün Sayısı</p>
               <div><%= ctg.urun_sayisi %></div>
@@ -102,6 +102,11 @@
         </div>
         <% }) %>
       </div>
+      <% } else { %>
+      <div class="no-data">
+        <img src="/assets/svg/no_data.svg" />
+      </div>
+      <% } %>
     </main>
     <!-- Scripts -->
     <script src="/assets/js/generateColorFromStr.js"></script>

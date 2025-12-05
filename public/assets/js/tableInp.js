@@ -55,7 +55,6 @@ document.addEventListener("click", async (e) => {
       fiyat: row.querySelector(".edit-price").value,
     };
 
-    // ***** AJAX ile backend'e gönder *****
     const res = await fetch(`/urunler/${id}/guncelle`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

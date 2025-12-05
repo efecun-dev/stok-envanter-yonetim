@@ -5,6 +5,7 @@
   <body class="light" style="display: flex">
     <!-- Sidebar -->
     <%- include("../../components/Sidebar", { active: "stok-durumu" }) %>
+
     <!-- Main -->
     <main id="dashboard-main">
       <div class="dash-header">
@@ -12,17 +13,11 @@
           <h2>Stok Durumu</h2>
           <p>Tüm ürünlerinizin anlık stok seviyelerini görüntüleyin</p>
         </div>
-        <div class="col flex-row">
-          <a href="" class="btn"
-            ><span class="bxr bx-arrow-in-down-square-half"></span>Rapor
-            İndir</a
-          >
-          <a href="" class="btn btn-primary"
-            ><span class="bxr bx-bolt"></span>Toplu Güncelle</a
-          >
-        </div>
       </div>
+
       <div class="dash-divider"></div>
+
+      <% if (criticalCount > 0) { %>
       <div class="warning-box">
         <div class="col">
           <div class="row">
@@ -31,373 +26,173 @@
           <div class="row">
             <strong>Kritik Stok Uyarısı!</strong>
             <p>
-              23 ürün kritik stok seviyesinin altında. Acil tedarik gerekiyor.
+              <%= criticalCount %> ürün kritik stok seviyesinin altında. Acil
+              tedarik gerekiyor.
             </p>
           </div>
         </div>
-        <div class="col">
-          <a href="" class="btn btn-danger">Hemen Görüntüle</a>
-        </div>
       </div>
+      <% } %>
+
+      <!-- Üst istatistik kartları -->
       <div class="stats-grid">
-        <div class="stat-card danger">
-          <div class="row">
-            <div class="col"><div class="status danger"></div></div>
-            <div class="col"><div class="stat-pin danger">Acil</div></div>
-          </div>
-          <div class="row">
-            <p>Kritik Stok</p>
-          </div>
-          <div class="row">
-            <h4>23</h4>
-          </div>
-          <div class="row">
-            <div class="trend-bar success">
-              <span class="bxr bx-arrow-up-stroke"></span>+5 bu hafta
-            </div>
-          </div>
-        </div>
-        <div class="stat-card warn">
-          <div class="row">
-            <div class="col"><div class="status warn"></div></div>
-            <div class="col"><div class="stat-pin warn">Dikkat</div></div>
-          </div>
-          <div class="row">
-            <p>Kritik Stok</p>
-          </div>
-          <div class="row">
-            <h4>74</h4>
-          </div>
-          <div class="row">
-            <div class="trend-bar danger">
-              <span class="bxr bx-arrow-down-stroke"></span>-12 bu hafta
-            </div>
-          </div>
-        </div>
-        <div class="stat-card success">
-          <div class="row">
-            <div class="col"><div class="status success"></div></div>
-            <div class="col"><div class="stat-pin success">Normal</div></div>
-          </div>
-          <div class="row">
-            <p>Düşük Stok</p>
-          </div>
-          <div class="row">
-            <h4>1,150</h4>
-          </div>
-          <div class="row">
-            <div class="trend-bar success">
-              <span class="bxr bx-arrow-up-stroke"></span>+28 bu hafta
-            </div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="row">
-            <div class="col"><span class="bxr bx-dollar-circle"></span></div>
-          </div>
-          <div class="row">
-            <p>Toplam Stok Değeri</p>
-          </div>
-          <div class="row">
-            <h4>₺2.4M</h4>
-          </div>
-          <div class="row">
-            <div class="trend-bar success">
-              <span class="bxr bx-arrow-up-stroke"></span>%8.5 bu hafta
-            </div>
-          </div>
-        </div>
+  <div class="stat-card danger">
+    <div class="row">
+      <div class="col"><div class="status danger"></div></div>
+      <div class="col"><div class="stat-pin danger">Acil</div></div>
+    </div>
+    <div class="row">
+      <p>Kritik Stok</p>
+    </div>
+    <div class="row">
+      <!-- GLOBAL KRİTİK SAYI -->
+      <h4><%= criticalCount %></h4>
+    </div>
+    <div class="row">
+      <div class="trend-bar success">
+        <span class="bxr bx-arrow-up-stroke"></span>+5 bu hafta
       </div>
+    </div>
+  </div>
+
+  <div class="stat-card warn">
+    <div class="row">
+      <div class="col"><div class="status warn"></div></div>
+      <div class="col"><div class="stat-pin warn">Dikkat</div></div>
+    </div>
+    <div class="row">
+      <p>Düşük Stok</p>
+    </div>
+    <div class="row">
+      <!-- GLOBAL DÜŞÜK SAYI -->
+      <h4><%= lowCount %></h4>
+    </div>
+    <div class="row">
+      <div class="trend-bar danger">
+        <span class="bxr bx-arrow-down-stroke"></span>-12 bu hafta
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card success">
+    <div class="row">
+      <div class="col"><div class="status success"></div></div>
+      <div class="col"><div class="stat-pin success">Normal</div></div>
+    </div>
+    <div class="row">
+      <p>Yeterli Stok</p>
+    </div>
+    <div class="row">
+      <!-- GLOBAL NORMAL SAYI -->
+      <h4><%= normalCount %></h4>
+    </div>
+    <div class="row">
+      <div class="trend-bar success">
+        <span class="bxr bx-arrow-up-stroke"></span>+28 bu hafta
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="row">
+      <div class="col"><span class="bxr bx-dollar-circle"></span></div>
+    </div>
+    <div class="row">
+      <p>Toplam Stok Değeri</p>
+    </div>
+    <div class="row">
+      <!-- GLOBAL TOPLAM DEĞER -->
+      <h4>₺<%= totalValue.toLocaleString() %></h4>
+    </div>
+    <div class="row">
+      <div class="trend-bar success">
+        <span class="bxr bx-arrow-up-stroke"></span>%8.5 bu hafta
+      </div>
+    </div>
+  </div>
+</div>
+      <!-- Tabs + Search -->
       <div class="category-tabs-container">
         <div class="ct-tab-buttons">
           <div class="ct-tab-btn active" data-target="1">
             <p>Tümü</p>
-            <div class="ct-tab-pin">1,247</div>
+            <div class="ct-tab-pin"><%= totalProduct %></div>
           </div>
           <div class="ct-tab-btn" data-target="2">
             <div class="circle circle-danger"></div>
             <p>Kritik</p>
-            <div class="ct-tab-pin">23</div>
+            <div class="ct-tab-pin"><%= criticalCount %></div>
           </div>
           <div class="ct-tab-btn" data-target="3">
             <div class="circle circle-warning"></div>
             <p>Düşük</p>
-            <div class="ct-tab-pin">74</div>
+            <div class="ct-tab-pin"><%= lowCount %></div>
           </div>
           <div class="ct-tab-btn" data-target="4">
             <div class="circle circle-success"></div>
             <p>Yeterli</p>
-            <div class="ct-tab-pin">1,150</div>
+            <div class="ct-tab-pin"><%= normalCount %></div>
           </div>
         </div>
+
         <div class="ct-search-container">
-          <form action="" method="post">
-            <div class="inp-sec">
-              <input type="text" placeholder="Ürün ara..." name="search" />
+          <form id="stock-search-form">
+            <div class="inp-sec" method="get" action="/">
+              <input
+                type="text"
+                placeholder="Ürün ara..."
+                name="search"
+                autocomplete="off"
+              />
               <label for="search"><span class="bxr bx-search"></span></label>
             </div>
-            <select name="categories">
-              <option selected value="all">Tüm Kategoriler</option>
-              <option value="1">Elektronik</option>
-              <option value="2">Giyim</option>
-              <option value="3">Gıda</option>
+            <select
+              name="category"
+              onchange="event.preventDefault(); this.closest('form').submit();"
+            >
+              <option value="" >Tüm Kategoriler</option>
+              <% categories.forEach((ctg) => { %>
+              <option value="<%= ctg.id %>" <%= filters.category == ctg.id ? 'selected' : '' %>><%= ctg.kategori_adi %></option>
+              <% }) %>
             </select>
-            <select name="categories">
-              <option selected value="all">Sırala: Kritik -> Normal</option>
-              <option value="lower">En Az Stok</option>
-              <option value="upper">En Çok Stok</option>
-              <option value="a-z">A-Z</option>
-              <option value="z-a">Z-A</option>
+            <select name="sort" onchange="event.preventDefault(); this.closest('form').submit();">
+              <option value="default" <%= filters.sort == 'default' ? 'selected' : '' %>>Kritik -> Normal</option>
+              <option value="lower" <%= filters.sort == 'lower' ? 'selected' : '' %>>En Az Stok</option>
+              <option value="upper" <%= filters.sort == 'upper' ? 'selected' : '' %>>En Çok Stok</option>
+              <option value="asc" <%= filters.sort == 'asc' ? 'selected' : '' %>>A-Z</option>
+              <option value="desc" <%= filters.sort == 'desc' ? 'selected' : '' %>>Z-A</option>
             </select>
           </form>
         </div>
+
         <div class="dash-divider"></div>
+
+        <!-- Tüm Ürünler -->
         <div class="product-container" data-id="1">
-          <div class="product-box success">
-            <div class="row">
-              <div class="col">
-                <h4>Polo T-Shirt Premium</h4>
-                <p>Giyim • #BAR234567</p>
-              </div>
-              <div class="col">
-                <div class="stat-pin success">
-                  <div class="circle circle-success"></div>
-                  Yeterli
-                </div>
-              </div>
-            </div>
-            <div class="row flex-column">
-              <div class="row">
-                <div class="col">156 Adet</div>
-                <div class="col"><i>Min: 100</i></div>
-              </div>
-              <div class="row">
-                <div class="progress-bar">
-                  <div class="progress success" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
-            <div class="product-divider"></div>
-            <div class="row">
-              <div class="col">
-                <h5>Birim Fiyat</h5>
-                <h6>₺450</h6>
-              </div>
-              <div class="col w-100px">
-                <h5>Toplam Değer</h5>
-                <h6>₺70,200</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <h5>Son Giriş</h5>
-                <h6>1 Gün Önce</h6>
-              </div>
-              <div class="col w-100px">
-                <h5 data-label="Eksik">&nbsp;Miktar</h5>
-                <h6 class="success">+56 Adet</h6>
-              </div>
-            </div>
-            <div class="row">
-              <a href="" class="btn btn-primary"
-                ><span class="bxr bx-arrow-in-down-square-half"></span>Stok
-                Ekle</a
-              >
-              <a href="" class="btn btn-danger"
-                ><span class="bxr bx-arrow-out-up-square-half"></span>Stok
-                Çıkar</a
-              >
-              <a href="" class="btn"
-                ><span class="bxr bx-edit-alt"></span>Düzenle</a
-              >
-            </div>
-          </div>
+          <%- include("./partials/stok-durumu-list", { items: products,
+          categories, lastEntries }) %>
         </div>
+
+        <!-- Kritik Stok -->
         <div class="product-container hidden" data-id="2">
-          <div class="product-box success">
-            <div class="row">
-              <div class="col">
-                <h4>asdasdas</h4>
-                <p>Giyim • #BAR234567</p>
-              </div>
-              <div class="col">
-                <div class="stat-pin success">
-                  <div class="circle circle-success"></div>
-                  Yeterli
-                </div>
-              </div>
-            </div>
-            <div class="row flex-column">
-              <div class="row">
-                <div class="col">156 Adet</div>
-                <div class="col"><i>Min: 100</i></div>
-              </div>
-              <div class="row">
-                <div class="progress-bar">
-                  <div class="progress success" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
-            <div class="product-divider"></div>
-            <div class="row">
-              <div class="col">
-                <h5>Birim Fiyat</h5>
-                <h6>₺450</h6>
-              </div>
-              <div class="col w-100px">
-                <h5>Toplam Değer</h5>
-                <h6>₺70,200</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <h5>Son Giriş</h5>
-                <h6>1 Gün Önce</h6>
-              </div>
-              <div class="col w-100px">
-                <h5 data-label="Eksik">&nbsp;Miktar</h5>
-                <h6 class="success">+56 Adet</h6>
-              </div>
-            </div>
-            <div class="row">
-              <a href="" class="btn btn-primary"
-                ><span class="bxr bx-arrow-in-down-square-half"></span>Stok
-                Ekle</a
-              >
-              <a href="" class="btn btn-danger"
-                ><span class="bxr bx-arrow-out-up-square-half"></span>Stok
-                Çıkar</a
-              >
-              <a href="" class="btn"
-                ><span class="bxr bx-edit-alt"></span>Düzenle</a
-              >
-            </div>
-          </div>
+          <%- include("./partials/stok-durumu-list", { items: critical,
+          categories, lastEntries }) %>
         </div>
+
+        <!-- Düşük Stok -->
         <div class="product-container hidden" data-id="3">
-          <div class="product-box success">
-            <div class="row">
-              <div class="col">
-                <h4>Polo T-Shirt Premium</h4>
-                <p>Giyim • #BAR234567</p>
-              </div>
-              <div class="col">
-                <div class="stat-pin success">
-                  <div class="circle circle-success"></div>
-                  Yeterli
-                </div>
-              </div>
-            </div>
-            <div class="row flex-column">
-              <div class="row">
-                <div class="col">156 Adet</div>
-                <div class="col"><i>Min: 100</i></div>
-              </div>
-              <div class="row">
-                <div class="progress-bar">
-                  <div class="progress success" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
-            <div class="product-divider"></div>
-            <div class="row">
-              <div class="col">
-                <h5>Birim Fiyat</h5>
-                <h6>₺450</h6>
-              </div>
-              <div class="col w-100px">
-                <h5>Toplam Değer</h5>
-                <h6>₺70,200</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <h5>Son Giriş</h5>
-                <h6>1 Gün Önce</h6>
-              </div>
-              <div class="col w-100px">
-                <h5 data-label="Eksik">&nbsp;Miktar</h5>
-                <h6 class="success">+56 Adet</h6>
-              </div>
-            </div>
-            <div class="row">
-              <a href="" class="btn btn-primary"
-                ><span class="bxr bx-arrow-in-down-square-half"></span>Stok
-                Ekle</a
-              >
-              <a href="" class="btn btn-danger"
-                ><span class="bxr bx-arrow-out-up-square-half"></span>Stok
-                Çıkar</a
-              >
-              <a href="" class="btn"
-                ><span class="bxr bx-edit-alt"></span>Düzenle</a
-              >
-            </div>
-          </div>
+          <%- include("./partials/stok-durumu-list", { items: low, categories,
+          lastEntries }) %>
         </div>
+
+        <!-- Yeterli Stok -->
         <div class="product-container hidden" data-id="4">
-          <div class="product-box success">
-            <div class="row">
-              <div class="col">
-                <h4>Polo T-Shirt Premium</h4>
-                <p>Giyim • #BAR234567</p>
-              </div>
-              <div class="col">
-                <div class="stat-pin success">
-                  <div class="circle circle-success"></div>
-                  Yeterli
-                </div>
-              </div>
-            </div>
-            <div class="row flex-column">
-              <div class="row">
-                <div class="col">156 Adet</div>
-                <div class="col"><i>Min: 100</i></div>
-              </div>
-              <div class="row">
-                <div class="progress-bar">
-                  <div class="progress success" style="width: 100%"></div>
-                </div>
-              </div>
-            </div>
-            <div class="product-divider"></div>
-            <div class="row">
-              <div class="col">
-                <h5>Birim Fiyat</h5>
-                <h6>₺450</h6>
-              </div>
-              <div class="col w-100px">
-                <h5>Toplam Değer</h5>
-                <h6>₺70,200</h6>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <h5>Son Giriş</h5>
-                <h6>1 Gün Önce</h6>
-              </div>
-              <div class="col w-100px">
-                <h5 data-label="Eksik">&nbsp;Miktar</h5>
-                <h6 class="success">+56 Adet</h6>
-              </div>
-            </div>
-            <div class="row">
-              <a href="" class="btn btn-primary"
-                ><span class="bxr bx-arrow-in-down-square-half"></span>Stok
-                Ekle</a
-              >
-              <a href="" class="btn btn-danger"
-                ><span class="bxr bx-arrow-out-up-square-half"></span>Stok
-                Çıkar</a
-              >
-              <a href="" class="btn"
-                ><span class="bxr bx-edit-alt"></span>Düzenle</a
-              >
-            </div>
-          </div>
+          <%- include("./partials/stok-durumu-list", { items: normal,
+          categories, lastEntries }) %>
         </div>
       </div>
     </main>
+
     <!-- Scripts -->
     <script src="/assets/js/stockTabs.js"></script>
   </body>

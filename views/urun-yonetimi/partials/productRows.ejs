@@ -1,8 +1,6 @@
-<% products.forEach((item) => { %>
+<% products.forEach((item, index) => { %>
 <tr>
-  <td class="checkbox-cell">
-    <input type="checkbox" class="select-checkbox" />
-  </td>
+  <td><%= index+1 %></td>
   <td>
     <div class="table-image">
       <img src="<%= item.resim_url %>" alt="" />
@@ -45,10 +43,15 @@
   </td>
   <td class="actions-cell">
     <div class="action-buttons">
-      <div class="act-btn edit-product-btn" data-product-id="<%= item.id %>">
+      <div
+        class="btn btn-primary edit-product-btn"
+        data-product-id="<%= item.id %>"
+      >
         <span class="bxr bx-edit-alt"></span>
       </div>
-      <a href="" class="act-btn"><span class="bxr bx-trash"></span></a>
+      <a href="/urun-yonetimi/urunler/sil/<%= item.id %>" class="btn btn-danger"
+        ><span class="bxr bx-trash"></span
+      ></a>
     </div>
   </td>
 </tr>

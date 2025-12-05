@@ -492,9 +492,7 @@
             <table>
               <thead>
                 <tr>
-                  <th class="checkbox-cell">
-                    <input type="checkbox" class="select-all" />
-                  </th>
+                  <th>#</th>
                   <th>Resim</th>
                   <th class="sortable">
                     <p>
@@ -536,19 +534,6 @@
           <div class="product-grid">
             <% products.map((item) => { %>
             <div class="product-item">
-              <div class="quick-actions">
-                <div class="checkbox">
-                  <input type="checkbox" class="select-checkbox" />
-                </div>
-                <div class="pr-actions">
-                  <div class="act-btn">
-                    <span class="bxr bx-edit-alt"></span>
-                  </div>
-                  <div class="act-btn">
-                    <span class="bxr bx-eye-alt"></span>
-                  </div>
-                </div>
-              </div>
               <div class="product-image">
                 <img src="<%= item.resim_url %>" />
               </div>
@@ -580,10 +565,17 @@
               </div>
               <div class="box-divider"></div>
               <div class="action-buttons">
-                <a href="" class="btn">Detay</a>
-                <button class="act-btn">
-                  <span class="bxr bx-dots-vertical"></span>
-                </button>
+                <div
+                  class="btn btn-primary edit-product-btn"
+                  data-product-id="<%= item.id %>"
+                >
+                  <span class="bxr bx-edit-alt"></span>
+                </div>
+                <a
+                  href="/urun-yonetimi/urunler/sil/<%= item.id %>"
+                  class="btn btn-danger"
+                  ><span class="bxr bx-trash"></span
+                ></a>
               </div>
             </div>
             <% }) %>
@@ -640,9 +632,17 @@
                 </td>
                 <td>
                   <div class="action-buttons">
-                    <div class="act-btn">
-                      <span class="bxr bx-dots-vertical"></span>
+                    <div
+                      class="act-btn edit-product-btn"
+                      data-product-id="<%= item.id %>"
+                    >
+                      <span class="bxr bx-edit-alt"></span>
                     </div>
+                    <a
+                      href="/urun-yonetimi/urunler/sil/<%= item.id %>"
+                      class="act-btn"
+                      ><span class="bxr bx-trash"></span
+                    ></a>
                   </div>
                 </td>
               </tr>

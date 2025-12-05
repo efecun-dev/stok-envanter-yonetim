@@ -2,6 +2,7 @@ const Product = require("../models/Product");
 const Category = require("../models/Category");
 const Units = require("../models/Units");
 const Logs = require("../models/Logs");
+const ExcelJS = require("exceljs");
 
 exports.getProducts = async (req, res) => {
   const categoryStats = await Category.getCategoryStats();
@@ -157,6 +158,64 @@ exports.postEditProduct = async (req, res) => {
     res.redirect("/urun-yonetimi/urunler");
   } catch (err) {
     console.error("Ürün düzenleme hatası:", err);
+    res.redirect("/urun-yonetimi/urunler");
+  }
+};
+
+exports.getDeleteProduct = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Product.deleteProduct(id);
+    req.session.alert = {
+      type: "success",
+      message: "Ürün silme işlemi başarılı",
+    };
+    res.redirect("/urun-yonetimi/urunler");
+  } catch (err) {
+    console.error("getDeleteProduct hata:", err);
+    res.redirect("/urun-yonetimi/urunler");
+  }
+};
+
+exports.productExcel = async (req, res) => {
+  try {
+    const products = await Product.getAllProducts();
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Ürünler");
+
+    worksheet.columns = [
+      { header: "ID", key: "id", width: 10 },
+      { header: "Ürün Adı", key: "urun_adi", width: 30 },
+      { header: "SKU", key: "sku", width: 20 },
+      { header: "Kategori", key: "kategori_adi", width: 20 },
+      { header: "Mevcut Stok", key: "mevcut_stok", width: 15 },
+      { header: "Alış Fiyatı", key: "alis_fiyati", width: 15 },
+      { header: "Satış Fiyatı", key: "satis_fiyati", width: 15 },
+      { header: "Oluşturulma", key: "created_at", width: 20 },
+    ];
+
+    products.forEach((p) => {
+      worksheet.addRow({
+        id: p.id,
+        urun_adi: p.urun_adi,
+        sku: p.sku,
+        kategori_adi: p.kategori_adi || "",
+        mevcut_stok: p.mevcut_stok,
+        alis_fiyati: p.alis_fiyati,
+        satis_fiyati: p.satis_fiyati,
+        created_at: p.created_at,
+      });
+    });
+    worksheet.getRow(1).font = { bold: true };
+    res.setHeader(
+      "Content-Type",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+    res.setHeader("Content-Disposition", "attachment; filename=urunler.xlsx");
+    await workbook.xlsx.write(res);
+    res.end();
+  } catch (err) {
+    console.error("productExcel hata: ", err);
     res.redirect("/urun-yonetimi/urunler");
   }
 };

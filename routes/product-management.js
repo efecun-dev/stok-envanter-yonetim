@@ -4,7 +4,9 @@ const productManagementController = require("../controllers/productManagementCon
 const upload = require("../middlewares/upload");
 
 router.get("/urunler", productManagementController.getProducts);
+router.get("/urunler/sil/:id", productManagementController.getDeleteProduct);
 router.get("/urunler/search", productManagementController.ajaxSearchProducts);
+router.get("/urunler/excel", productManagementController.productExcel);
 
 router.post(
   "/urunler/duzenle/:id",

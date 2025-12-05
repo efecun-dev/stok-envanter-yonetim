@@ -315,6 +315,17 @@ class Product {
       throw err;
     }
   }
+
+  static async deleteProduct(id) {
+    try {
+      let sql = "DELETE FROM urunler WHERE id = ?";
+      const result = await db.query(sql, [id]);
+      return result;
+    } catch (err) {
+      console.error("Product.deleteProduct hata:", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Product;

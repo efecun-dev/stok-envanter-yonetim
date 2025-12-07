@@ -8,7 +8,11 @@ router.post("/stok-durumu/stok-sil/:id", stockController.postStockStatDecrease);
 router.get("/stok-durumu/search", stockController.getStockStatusAjax);
 
 router.get("/stok-girisi", stockController.getStockAdd);
+router.post("/stok-girisi", stockController.postStockAdd);
+
 router.get("/stok-cikisi", stockController.getStockRemove);
+router.post("/stok-cikisi", stockController.postStockOut);
+
 router.get("/hareketler", stockController.getStockLogs);
 
 module.exports = router;

@@ -149,8 +149,88 @@ exports.getStockAdd = (req, res) => {
   res.render("stok-islemleri/stok-girisi");
 };
 
+exports.postStockAdd = async (req, res, next) => {
+  try {
+    const { products, waybill, description } = req.body;
+    const userId = req.user.id;
+
+    let productIds = products || [];
+    if (!Array.isArray(productIds)) {
+      productIds = [productIds];
+    }
+
+    if (productIds.length === 0) {
+      return res.redirect("/stok-islemleri/stok-girisi");
+    }
+
+    for (const productId of productIds) {
+      const qtyRaw = req.body[`giris_miktari_${productId}`];
+      const quantity = parseInt(qtyRaw, 10) || 0;
+
+      if (!quantity || quantity <= 0) continue;
+
+      await Product.addStock(productId, quantity);
+      await Logs.addLog(
+        productId,
+        "giris",
+        waybill,
+        quantity,
+        description,
+        userId
+      );
+    }
+
+    req.session.alert = {
+      type: "success",
+      message: "Stok girişi işlemi başarılı.",
+    };
+    res.redirect("/stok-islemleri/stok-girisi");
+  } catch (err) {
+    console.error("postStockAdd hata:", err);
+    next(err);
+  }
+};
+
 exports.getStockRemove = (req, res) => {
   res.render("stok-islemleri/stok-cikisi");
+};
+
+exports.postStockOut = async (req, res, next) => {
+  try {
+    const { products, waybill, description } = req.body;
+    const userId = req.user.id;
+    if (!products) {
+      return res.redirect("/stok-islemleri/stok-cikisi");
+    }
+
+    let productIds = products;
+    if (!Array.isArray(productIds)) {
+      productIds = [productIds];
+    }
+
+    for (const productId of productIds) {
+      const qtyRaw = req.body[`cikis_miktari_${productId}`];
+      const quantity = parseInt(qtyRaw, 10) || 0;
+
+      if (!quantity || quantity <= 0) continue;
+
+      await Product.decreaseStock(productId, quantity);
+
+      await Logs.addLog(
+        productId,
+        "cikis",
+        waybill || null,
+        quantity,
+        description || "",
+        userId
+      );
+    }
+
+    res.redirect("/stok-islemleri/stok-cikisi");
+  } catch (err) {
+    console.error("postStockOut hata:", err);
+    next(err);
+  }
 };
 
 exports.getStockLogs = (req, res) => {

@@ -2859,7 +2859,7 @@ h6.danger {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #f0f0f0;
+  background: #fff;
   cursor: pointer;
 }
 

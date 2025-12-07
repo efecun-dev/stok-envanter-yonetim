@@ -1,226 +1,330 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
   <!-- Head -->
   <%- include("../../components/Head", { title: "Stok Çıkışı" }) %>
   <body class="light" style="display: flex">
     <!-- Sidebar -->
-    <%- include("../../components/Sidebar", { active: "stok-cikisi"}) %>
-    <!-- Main -->
-    <main id="dashboard-main">
-      <div class="dash-header">
-        <div class="col">
-          <h2>Stok Çıkışı</h2>
-          <p>Depodan ürün çıkışı kaydedin</p>
-        </div>
-        <div class="col flex-row">
-          <a href="" class="btn"
-            ><span class="bxr bx-clipboard-detail"></span>Son Çıkışlar</a
-          >
-          <a href="" class="btn btn-primary"
-            ><span class="bxr bx-check"></span>Kaydet ve Onayla</a
-          >
-        </div>
-      </div>
-      <div class="dash-divider"></div>
-      <div class="warning-box">
-        <div class="col">
-          <div class="row">
-            <span class="bxr bxs-alert-triangle"></span>
-          </div>
-          <div class="row">
-            <strong>Dikkat!</strong>
-            <p>
-              Stok çıkışı yaptığınızda ürünlerin mevcut stok miktarları
-              azalacaktır. Yetersiz stok durumunda işlem gerçekleştirilemez.
-            </p>
-          </div>
-        </div>
-        <div class="col"></div>
-      </div>
-      <div class="quick-add-section">
-        <div class="row">
-          <span class="bxr bx-plus"></span>
-          <p>Ürün Ekle</p>
-        </div>
-        <div class="row">
-          <div class="select-inp">
-            <input
-              type="text"
-              id="productSearch"
-              placeholder="Ürün adı, SKU veya barkod ara..."
-            />
-            <div class="search-dropdown hidden">
-              <ul>
-                <li>
-                  <div class="col">
-                    <img src="https://placehold.co/100x100" />
-                  </div>
-                  <div class="col">
-                    <h4>iPhone 13 Pro Max</h4>
-                    <p>Teknoloji • #BAR12345</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="col">
-                    <img src="https://placehold.co/100x100" />
-                  </div>
-                  <div class="col">
-                    <h4>iPhone 13 Pro Max</h4>
-                    <p>Teknoloji • #BAR12345</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="col">
-                    <img src="https://placehold.co/100x100" />
-                  </div>
-                  <div class="col">
-                    <h4>iPhone 13 Pro Max</h4>
-                    <p>Teknoloji • #BAR12345</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="col">
-                    <img src="https://placehold.co/100x100" />
-                  </div>
-                  <div class="col">
-                    <h4>iPhone 13 Pro Max</h4>
-                    <p>Teknoloji • #BAR12345</p>
-                  </div>
-                </li>
-                <li>
-                  <div class="col">
-                    <img src="https://placehold.co/100x100" />
-                  </div>
-                  <div class="col">
-                    <h4>iPhone 13 Pro Max</h4>
-                    <p>Teknoloji • #BAR12345</p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+    <%- include("../../components/Sidebar", { active: "stok-cikisi" }) %>
+    <!-- Alert -->
+    <%- include("../../components/Alert") %>
 
-          <a href="" class="btn btn-primary"
-            ><span class="bxr bx-plus"></span>Ekle</a
-          >
+    <!-- Main -->
+    <form action="/stok-islemleri/stok-cikisi" class="form" method="post">
+      <main id="dashboard-main">
+        <div class="dash-header">
+          <div class="col">
+            <h2>Stok Çıkışı</h2>
+            <p>Depodan ürün çıkışı kaydedin</p>
+          </div>
+          <div class="col flex-row">
+            <button type="submit" class="btn btn-primary">
+              <span class="bxr bx-check"></span>Kaydet ve Onayla
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="content-flexbox">
-        <div class="form-container flex-2">
-          <h3><span class="bxr bx-package"></span>Ürünler</h3>
-          <div class="form-divider"></div>
-          <table>
-            <thead>
-              <tr>
-                <th>Ürün</th>
-                <th>Mevcut Stok</th>
-                <th>Çıkış Miktarı</th>
-                <th>Yeni Stok</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <div class="table-info">
-                    <div class="row">iPhone 13 Pro Max</div>
-                    <div class="row"><p>#BAR12345</p></div>
-                  </div>
-                </td>
-                <td>3 adet</td>
-                <td>
-                  <input type="number" min="0" placeholder="0" />
-                </td>
-                <td><strong>53 adet</strong></td>
-                <td>
-                  <div class="btn btn-danger fit-content">
-                    <span class="bxr bx-trash"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="table-info">
-                    <div class="row">iPhone 13 Pro Max</div>
-                    <div class="row"><p>#BAR12345</p></div>
-                  </div>
-                </td>
-                <td>3 adet</td>
-                <td>
-                  <input type="number" min="0" placeholder="0" />
-                </td>
-                <td><strong>53 adet</strong></td>
-                <td>
-                  <div class="btn btn-danger fit-content">
-                    <span class="bxr bx-trash"></span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="table-info">
-                    <div class="row">iPhone 13 Pro Max</div>
-                    <div class="row"><p>#BAR12345</p></div>
-                  </div>
-                </td>
-                <td>3 adet</td>
-                <td>
-                  <input type="number" min="0" placeholder="0" />
-                </td>
-                <td><strong>53 adet</strong></td>
-                <td>
-                  <div class="btn btn-danger fit-content">
-                    <span class="bxr bx-trash"></span>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-container">
-          <h3><span class="bxr bx-chart-bar-columns"></span>Çıkış Özeti</h3>
-          <div class="form-divider"></div>
-          <div class="stat-container">
+
+        <div class="dash-divider"></div>
+
+        <div class="warning-box">
+          <div class="col">
             <div class="row">
-              <h5>Ürün Çeşidi</h5>
-              <p>3</p>
+              <span class="bxr bxs-alert-triangle"></span>
             </div>
             <div class="row">
-              <h5>Toplam Çıkış</h5>
-              <p>105 birim</p>
-            </div>
-            <div class="row">
-              <h5>Tahmini Değer</h5>
-              <p>₺1,119,000</p>
-            </div>
-            <div class="row">
-              <h5>Toplam Yeni Stok</h5>
-              <p class="danger">118 birim</p>
+              <strong>Dikkat!</strong>
+              <p>
+                Stok çıkışı yaptığınızda ürünlerin mevcut stok miktarları
+                azalacaktır. Yetersiz stok durumunda işlem gerçekleştirilemez.
+              </p>
             </div>
           </div>
-          <div class="form-divider"></div>
-          <div class="entry-details">
-            <div class="form-input">
-              <label for="entry-date">Çıkış Tarihi</label>
-              <input type="date" name="entry-date" />
-            </div>
-            <div class="form-input">
-              <label for="suppler">Tedarikçi</label>
-              <select name="suppler" id="suppler">
-                <option selected disabled>Tedarikçi Seçin</option>
-              </select>
-            </div>
-            <div class="form-input">
-              <label for="waybill">İrsaliye/Fatura No</label>
+          <div class="col"></div>
+        </div>
+
+        <!-- Ürün Hızlı Ekle -->
+        <div class="quick-add-section">
+          <div class="row">
+            <span class="bxr bx-plus"></span>
+            <p>Ürün Ekle</p>
+          </div>
+          <div class="row">
+            <div class="select-inp">
               <input
                 type="text"
-                name="waybill"
-                placeholder="Örn.: IRS-2025-001"
+                id="productSearch"
+                placeholder="Ürün adı, SKU veya barkod ara..."
+                autocomplete="off"
               />
+              <div class="search-dropdown hidden">
+                <ul id="searchResults"></ul>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
+
+        <div class="content-flexbox">
+          <!-- Ürün Tablosu -->
+          <div class="form-container flex-2">
+            <h3><span class="bxr bx-package"></span>Ürünler</h3>
+            <div class="form-divider"></div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Ürün</th>
+                  <th>Mevcut Stok</th>
+                  <th>Çıkış Miktarı</th>
+                  <th>Yeni Stok</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="stockTableBody"></tbody>
+            </table>
+          </div>
+
+          <!-- Çıkış Özeti -->
+          <div class="form-container">
+            <h3><span class="bxr bx-chart-bar-columns"></span>Çıkış Özeti</h3>
+            <div class="form-divider"></div>
+            <div class="stat-container">
+              <div class="row">
+                <h5>Ürün Çeşidi</h5>
+                <p id="productCount">0</p>
+              </div>
+              <div class="row">
+                <h5>Toplam Çıkış</h5>
+                <p id="totalExit">0 birim</p>
+              </div>
+              <div class="row">
+                <h5>Tahmini Değer</h5>
+                <p id="estimatedValue">₺0</p>
+              </div>
+              <div class="row">
+                <h5>Toplam Yeni Stok</h5>
+                <p id="totalNewStock" class="danger">0 birim</p>
+              </div>
+            </div>
+            <div class="form-divider"></div>
+            <div class="entry-details">
+              <div class="form-input">
+                <label for="waybill">İrsaliye/Fatura No</label>
+                <input
+                  type="text"
+                  name="waybill"
+                  placeholder="Örn.: IRS-2025-001"
+                />
+              </div>
+              <div class="form-input">
+                <label for="description">Açıklama</label>
+                <textarea
+                  name="description"
+                  placeholder="Çıkış hakkında not ekleyin"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </form>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const input = document.getElementById("productSearch");
+        const dropdown = document.querySelector(".search-dropdown");
+        const resultsBox = document.getElementById("searchResults");
+
+        const productCount = document.getElementById("productCount");
+        const totalExit = document.getElementById("totalExit");
+        const estimatedValue = document.getElementById("estimatedValue");
+        const totalNewStock = document.getElementById("totalNewStock");
+
+        let searchTimeout = null;
+
+        // Para formatlama helper'ı
+        function formatCurrency(value) {
+          return "₺" + (Number(value) || 0).toLocaleString("tr-TR");
+        }
+
+        // Özet hesaplama
+        function recalculateSummary() {
+          const tbody = document.getElementById("stockTableBody");
+          const rows = Array.from(tbody.querySelectorAll("tr"));
+
+          const productTypeCount = rows.length;
+
+          let toplamCikis = 0;
+          let toplamYeniStok = 0;
+          let tahminiDeger = 0;
+
+          rows.forEach((tr) => {
+            const mevcutText = tr.children[1]?.innerText || "0";
+            const mevcut = parseInt(mevcutText) || 0;
+
+            const input = tr.querySelector(".stok-input");
+            const cikis = input ? parseInt(input.value) || 0 : 0;
+
+            const price = parseFloat(tr.dataset.price) || 0;
+
+            toplamCikis += cikis;
+
+            const newStock = Math.max(mevcut - cikis, 0);
+            toplamYeniStok += newStock;
+
+            tahminiDeger += cikis * price;
+          });
+
+          productCount.textContent = productTypeCount;
+          totalExit.textContent = `${toplamCikis} birim`;
+          estimatedValue.textContent = formatCurrency(tahminiDeger);
+          totalNewStock.textContent = `${toplamYeniStok} birim`;
+        }
+
+        // ARAMA INPUTU
+        input.addEventListener("input", () => {
+          const query = input.value.trim();
+          clearTimeout(searchTimeout);
+
+          if (query.length === 0) {
+            dropdown.classList.add("hidden");
+            resultsBox.innerHTML = "";
+            return;
+          }
+
+          searchTimeout = setTimeout(() => {
+            fetch(`/api/search-products?q=${encodeURIComponent(query)}`)
+              .then((res) => res.json())
+              .then((data) => {
+                if (!data || data.length === 0) {
+                  dropdown.classList.add("hidden");
+                  resultsBox.innerHTML = "";
+                  return;
+                }
+
+                dropdown.classList.remove("hidden");
+
+                resultsBox.innerHTML = data
+                  .map(
+                    (item) => `
+                      <li
+                        data-id="${item.id}"
+                        data-name="${item.urun_adi}"
+                        data-sku="${item.sku}"
+                        data-stock="${item.mevcut_stok || 0}"
+                        data-category="${item.kategori_adi || ""}"
+                        data-image="${item.resim_url || ""}"
+                        data-price="${item.alis_fiyati || 0}"
+                      >
+                        <div class="col">
+                          <img src="${
+                            item.resim_url || "https://placehold.co/100x100"
+                          }" />
+                        </div>
+                        <div class="col">
+                          <h4>${item.urun_adi}</h4>
+                          <p>${item.kategori_adi || ""} • #${item.sku}</p>
+                        </div>
+                      </li>
+                    `
+                  )
+                  .join("");
+              })
+              .catch((err) => console.error("Arama hatası:", err));
+          }, 150);
+        });
+
+        // Ürüne tıklayınca tabloya ekle
+        document.addEventListener("click", (e) => {
+          const li = e.target.closest(".search-dropdown li");
+
+          if (li) {
+            const product = {
+              id: li.dataset.id,
+              urun_adi: li.dataset.name,
+              sku: li.dataset.sku,
+              mevcut_stok: parseInt(li.dataset.stock) || 0,
+              kategori_adi: li.dataset.category,
+              resim_url: li.dataset.image,
+              price: parseFloat(li.dataset.price) || 0,
+            };
+
+            addProductToTable(product);
+            dropdown.classList.add("hidden");
+            input.value = "";
+            return;
+          }
+
+          if (!e.target.closest(".select-inp")) {
+            dropdown.classList.add("hidden");
+          }
+        });
+
+        // Tabloya satır ekle
+        function addProductToTable(product) {
+          const tbody = document.getElementById("stockTableBody");
+
+          if (tbody.querySelector(`tr[data-id="${product.id}"]`)) {
+            alert("Bu ürün zaten ekli!");
+            return;
+          }
+
+          const tr = document.createElement("tr");
+          tr.dataset.id = product.id;
+          tr.dataset.price = product.price;
+
+          tr.innerHTML = `
+            <td>
+              <div class="table-info">
+                <div class="row">${product.urun_adi}</div>
+                <div class="row"><p>#${product.sku}</p></div>
+              </div>
+              <input type="hidden" name="products[]" value="${product.id}">
+            </td>
+            <td>${product.mevcut_stok} adet</td>
+            <td>
+              <input
+                type="number"
+                name="cikis_miktari_${product.id}"
+                min="0"
+                value="0"
+                class="stok-input"
+              />
+            </td>
+            <td><strong class="new-stock">${product.mevcut_stok} adet</strong></td>
+            <td>
+              <div class="btn btn-danger fit-content remove-row">
+                <span class="bxr bx-trash"></span>
+              </div>
+            </td>
+          `;
+
+          tbody.appendChild(tr);
+          recalculateSummary();
+        }
+
+        // Çıkış miktarı değişince hem satırı hem özeti güncelle
+        document.addEventListener("input", (e) => {
+          if (e.target.classList.contains("stok-input")) {
+            const tr = e.target.closest("tr");
+
+            const mevcutText = tr.children[1]?.innerText || "0";
+            const mevcut = parseInt(mevcutText) || 0;
+            const cikis = parseInt(e.target.value) || 0;
+
+            const newStock = Math.max(mevcut - cikis, 0);
+            tr.querySelector(".new-stock").innerText = `${newStock} adet`;
+
+            recalculateSummary();
+          }
+        });
+
+        // Satır silme
+        document.addEventListener("click", (e) => {
+          const removeBtn = e.target.closest(".remove-row");
+          if (removeBtn) {
+            removeBtn.closest("tr").remove();
+            recalculateSummary();
+          }
+        });
+      });
+    </script>
   </body>
 </html>

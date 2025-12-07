@@ -407,6 +407,34 @@ class Product {
       throw err;
     }
   }
+
+  static async searchProducts(query) {
+    try {
+      const q = `%${query}%`;
+
+      const [rows] = await db.query(
+        `
+      SELECT 
+        u.*,
+        u.resim_url,
+        k.kategori_adi
+      FROM urunler u
+      LEFT JOIN kategoriler k ON u.kategori_id = k.id
+      WHERE 
+        u.urun_adi LIKE ? 
+        OR u.sku LIKE ?
+        OR u.barkod LIKE ?
+      LIMIT 10
+      `,
+        [q, q, q]
+      );
+
+      return rows;
+    } catch (err) {
+      console.error("searchProducts hata:", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Product;

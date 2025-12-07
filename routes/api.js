@@ -5,5 +5,6 @@ const ApiController = require("../controllers/apiController");
 router.get("/urunler/:id", ApiController.getProduct);
 router.get("/kategoriler", ApiController.getCategories);
 router.get("/kategori/:id", ApiController.getCategory);
+router.get("/search-products", ApiController.searchProduct);
 
 module.exports = router;

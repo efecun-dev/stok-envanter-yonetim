@@ -54,3 +54,18 @@ exports.getCategory = async (req, res) => {
     return res.redirect("/urun-yonetimi/kategoriler");
   }
 };
+
+exports.searchProduct = async (req, res) => {
+  try {
+    const q = req.query.q || "";
+
+    if (!q) return res.json([]);
+
+    const results = await Product.searchProducts(q);
+
+    res.json(results);
+  } catch (err) {
+    console.error("Arama hatası:", err);
+    res.status(500).json([]);
+  }
+};

@@ -133,6 +133,31 @@ class Logs {
 
     return result;
   }
+
+  static async addLog(
+    urun_id,
+    hareket_turu,
+    irsaliye_fatura_no,
+    miktar,
+    aciklama,
+    yetkili_id
+  ) {
+    try {
+      let sql = `INSERT INTO hareketler (urun_id, hareket_turu, irsaliye_fatura_no, miktar, aciklama, yetkili_id) VALUES (?, ?, ?, ?, ?, ?)`;
+      const process = db.query(sql, [
+        urun_id,
+        hareket_turu,
+        irsaliye_fatura_no,
+        miktar,
+        aciklama,
+        yetkili_id,
+      ]);
+      return process;
+    } catch (err) {
+      console.error("Logs.addLog hata:", err);
+      throw err;
+    }
+  }
 }
 
 module.exports = Logs;

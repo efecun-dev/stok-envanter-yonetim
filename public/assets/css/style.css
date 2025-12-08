@@ -1877,7 +1877,7 @@ select:hover {
 }
 
 .min-w-100 {
-  min-width: 100px;
+  min-width: 120px !important;
 }
 
 .dash-header {

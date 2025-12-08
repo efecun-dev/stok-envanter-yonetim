@@ -22,7 +22,6 @@ btn.addEventListener("click", () => {
         </div>
       </div>
     `;
-  console.log(modal);
   document.body.appendChild(modal);
   var closeBtn = modal.querySelector(".modal-close");
   closeBtn.addEventListener("click", () => {

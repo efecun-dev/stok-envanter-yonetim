@@ -5,6 +5,7 @@
   <body class="light" style="display: flex">
     <!-- Sidebar -->
     <%- include("../../components/Sidebar", { active: "hareketler" }) %>
+
     <!-- Main -->
     <main id="dashboard-main">
       <div class="dash-header">
@@ -12,207 +13,426 @@
           <h2>Stok Hareketleri</h2>
           <p>Envanter giriş, çıkış ve transfer kayıtları.</p>
         </div>
-        <div class="col flex-row">
-          <a href="" class="btn"
-            ><span class="bxr bx-archive-arrow-down"></span>Dışa Aktar</a
-          >
-        </div>
       </div>
+
       <div class="dash-divider"></div>
+
       <div class="stock-log-container">
         <div class="stock-log-content flex-2">
-          <div class="log-search">
+          <!-- FİLTRE FORMU -->
+          <form class="log-search" method="get">
             <div class="search-box">
               <div class="form-input">
                 <input
                   type="text"
                   name="search"
                   placeholder="Ürün, işlem ID veya kullanıcı ara..."
+                  value="<%= (filters && filters.search) || '' %>"
+                  autocomplete="off"
                 />
               </div>
             </div>
+
             <div class="search-box">
-              <select name="categories">
-                <option value="all" selected>Tüm Kategoriler</option>
-                <option value="1">Elektronik</option>
-                <option value="2">Gıda</option>
-                <option value="3">Giyim</option>
+              <select name="category">
+                <option value="all">Tüm Kategoriler</option>
+                <% categories.forEach((ctg) => { %>
+                  <option
+                    value="<%= ctg.id %>"
+                    <%= filters && filters.category === ctg.id ? 'selected' : '' %>>
+                    <%= ctg.kategori_adi %>
+                  </option>
+                <% }) %>
               </select>
             </div>
+
             <div class="search-box">
               <select name="last">
-                <option value="7" selected>Son 7 Gün</option>
-                <option value="15">Son 15 Gün</option>
-                <option value="30">Bu ay</option>
-                <option value="90">Son 3 ay</option>
+                <option value="7"  <%= !filters || filters.last === '7'  || !filters.last ? 'selected' : '' %>>Son 7 Gün</option>
+                <option value="15" <%= filters && filters.last === '15' ? 'selected' : '' %>>Son 15 Gün</option>
+                <option value="30" <%= filters && filters.last === '30' ? 'selected' : '' %>>Bu Ay</option>
+                <option value="90" <%= filters && filters.last === '90' ? 'selected' : '' %>>Son 3 Ay</option>
               </select>
             </div>
-          </div>
+          </form>
+
+          <!-- LOG LİSTESİ -->
           <div class="log-grid">
-            <div class="log success">
-              <div class="row">
-                <div class="col">
-                  <div class="stat-pin success">
-                    <div class="circle circle-success"></div>
-                    Giriş
+            <% if (logs && logs.length) { %>
+              <% logs.forEach((log) => { %>
+                <div
+                  class="log <%= log.hareket_turu === 'giris' ? 'success' : log.hareket_turu === 'cikis' ? 'danger' : '' %>"
+                >
+                  <div class="row">
+                    <div class="col">
+                      <div
+                        class="stat-pin <%= log.hareket_turu === 'giris' ? 'success' : log.hareket_turu === 'cikis' ? 'danger' : '' %>"
+                      >
+                        <div
+                          class="circle circle-<%= log.hareket_turu === 'giris' ? 'success' : log.hareket_turu === 'cikis' ? 'danger' : '' %>"
+                        ></div>
+                        <%= log.hareket_turu === 'giris'
+                          ? 'Giriş'
+                          : log.hareket_turu === 'cikis'
+                          ? 'Çıkış'
+                          : '' %>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <p><%= log.relative_time %></p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="col">
+                        <h5 class="product-name"><%= log.urun_adi %></h5>
+                        <p class="barcode-number">#<%= log.sku %></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="row">
+                    <div class="col" style="gap: 4px">
+                      <h6>Miktar</h6>
+                      <span>
+                        <%= log.hareket_turu === 'giris' ? '+' : '-' %>
+                        <%= log.miktar %> <%= log.ad %>
+                      </span>
+                    </div>
+                    <div class="col min-w-100" style="gap: 4px">
+                      <h6>Yeni Stok</h6>
+                      <span>
+                        <%= log.eski_stok + (log.hareket_turu === 'giris' ? log.miktar : -log.miktar) %>
+                        <%= log.ad %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col" style="gap: 4px">
+                      <h6>Tedarikçi</h6>
+                      <span><%= log.tedarikci %></span>
+                    </div>
+                    <div class="col min-w-100" style="gap: 4px">
+                      <h6 data-label="İrsaliye"></h6>
+                      <span class="copy"><%= log.irsaliye_fatura_no || "-" %></span>
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="row">
+                    <div class="col">
+                      <h4 class="staff-name"><%= log.yetkili_adi %></h4>
+                    </div>
                   </div>
                 </div>
-                <div class="col">
-                  <p>14:32</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="col">
-                    <h5 class="product-name">iPhone 13 Pro Max</h5>
-                    <p class="barcode-number">#BAR123456</p>
-                  </div>
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="col" style="gap: 4px">
-                  <h6>Miktar</h6>
-                  <span>+50 Adet</span>
-                </div>
-                <div class="col min-w-100" style="gap: 4px">
-                  <h6>Yeni Stok</h6>
-                  <span>53 Adet</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col" style="gap: 4px">
-                  <h6>Tedarikçi</h6>
-                  <span>ABC Company</span>
-                </div>
-                <div class="col min-w-100" style="gap: 4px">
-                  <h6 data-label="İrsaliye"></h6>
-                  <span class="copy">IRS-2025-001</span>
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="col">
-                  <h4 class="staff-name">Murat Keskin</h4>
-                </div>
-                <div class="col">
-                  <div class="act-btn">
-                    <span class="bxr bx-dots-vertical"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="log danger">
-              <div class="row">
-                <div class="col">
-                  <div class="stat-pin danger">
-                    <div class="circle circle-danger"></div>
-                    Çıkış
-                  </div>
-                </div>
-                <div class="col">
-                  <p>13:11</p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="col">
-                    <h5 class="product-name">Samsung QLED TV</h5>
-                    <p class="barcode-number">#BAR674534</p>
-                  </div>
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="col" style="gap: 4px">
-                  <h6>Miktar</h6>
-                  <span>-12 Adet</span>
-                </div>
-                <div class="col min-w-100" style="gap: 4px">
-                  <h6>Yeni Stok</h6>
-                  <span>8 Adet</span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col" style="gap: 4px">
-                  <h6>Tedarikçi</h6>
-                  <span>TED Company</span>
-                </div>
-                <div class="col min-w-100" style="gap: 4px">
-                  <h6 data-label="Fatura"></h6>
-                  <span class="copy">FTR-2025-012</span>
-                </div>
-              </div>
-              <div class="divider"></div>
-              <div class="row">
-                <div class="col">
-                  <h4 class="staff-name">Murat Keskin</h4>
-                </div>
-                <div class="col">
-                  <div class="act-btn">
-                    <span class="bxr bx-dots-vertical"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              <% }) %>
+            <% } else { %>
+              <p>Filtrelere uygun stok hareketi bulunamadı.</p>
+            <% } %>
           </div>
         </div>
+
+        <!-- SAĞ TARAF WIDGETLAR -->
         <div class="stock-log-content">
           <div class="widget">
             <div class="widget-header">
               <span class="bxr bx-chart-bar-columns"></span>İstatistikler
             </div>
+
             <div class="row">
               <div class="col">Bu Ay Giriş</div>
               <div class="col">
-                234
-                <strong class="success"
-                  ><span class="bxr bx-arrow-up"></span>12%</strong
+                <span id="stat-giris-value"><%= stats.thisMonth.giris.toLocaleString() %></span>
+                <strong
+                  id="stat-giris-rate"
+                  class="<%= stats.changeRates.giris < 0 ? 'danger' : 'success' %>"
                 >
+                  <span
+                    class="bxr bx-arrow-<%= stats.changeRates.giris < 0 ? 'down' : 'up' %>"
+                  ></span>
+                  <%= parseInt(Math.abs(stats.changeRates.giris)) %>%
+                </strong>
               </div>
             </div>
+
             <div class="row">
               <div class="col">Bu Ay Çıkış</div>
               <div class="col">
-                189
-                <strong class="danger"
-                  ><span class="bxr bx-arrow-down"></span>8%</strong
+                <span id="stat-cikis-value"><%= stats.thisMonth.cikis.toLocaleString() %></span>
+                <strong
+                  id="stat-cikis-rate"
+                  class="<%= stats.changeRates.cikis < 0 ? 'danger' : 'success' %>"
                 >
+                  <span
+                    class="bxr bx-arrow-<%= stats.changeRates.cikis < 0 ? 'down' : 'up' %>"
+                  ></span>
+                  <%= parseInt(Math.abs(stats.changeRates.cikis)) %>%
+                </strong>
               </div>
             </div>
+
             <div class="row">
               <div class="col">Net Değişim</div>
-              <div class="col">+45</div>
+              <div class="col">
+                <span id="stat-net-value">
+                  <%= stats.thisMonth.net >= 0 ? '+' : '' %><%= stats.thisMonth.net %>
+                </span>
+              </div>
             </div>
+
             <div class="row">
               <div class="col">Toplam Hareket</div>
-              <div class="col">2,847</div>
+              <div class="col">
+                <span id="count-total"><%= counts.totalLog.toLocaleString() %></span>
+              </div>
             </div>
           </div>
+
           <div class="widget">
             <div class="widget-header">
               <span class="bxr bx-filter"></span>Hızlı Filtreler
             </div>
             <div class="filter-list">
-              <a class="filter-item selected"
-                >Tümü<span class="ct-tab-pin">327</span></a
+              <a
+                href="#"
+                data-type="tumu"
+                class="filter-item <%= !type ? 'selected' : '' %>"
               >
-              <a class="filter-item">
-                <span class="bxr bx-arrow-in-down-square-half"></span>Sadece
-                Giriş
-                <span class="ct-tab-pin">234</span>
+                Tümü
+                <span class="ct-tab-pin" id="count-total-tab"><%= counts.totalLog %></span>
               </a>
-              <a class="filter-item">
-                <span class="bxr bx-arrow-out-up-square-half"></span>Sadece
-                Çıkış
-                <span class="ct-tab-pin">189</span>
+
+              <a
+                href="#"
+                data-type="giris"
+                class="filter-item <%= type === 'giris' ? 'selected' : '' %>"
+              >
+                <span class="bxr bx-arrow-in-down-square-half"></span>
+                Sadece Giriş
+                <span class="ct-tab-pin" id="count-giris-tab"><%= counts.totalGiris %></span>
+              </a>
+
+              <a
+                href="#"
+                data-type="cikis"
+                class="filter-item <%= type === 'cikis' ? 'selected' : '' %>"
+              >
+                <span class="bxr bx-arrow-out-up-square-half"></span>
+                Sadece Çıkış
+                <span class="ct-tab-pin" id="count-cikis-tab"><%= counts.totalCikis %></span>
               </a>
             </div>
           </div>
         </div>
       </div>
     </main>
+
     <!-- Scripts -->
     <script src="/assets/js/copy.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector(".log-search");
+        const searchInput = form.querySelector('input[name="search"]');
+        const categorySelect = form.querySelector('select[name="category"]');
+        const lastSelect = form.querySelector('select[name="last"]');
+        const logGrid = document.querySelector(".log-grid");
+        const quickFilterLinks = document.querySelectorAll(".filter-list a");
+
+        let currentType = "<%= type || '' %>";
+
+        function buildQueryParams(extra = {}) {
+          const fd = new FormData(form);
+          const params = new URLSearchParams();
+
+          for (const [key, value] of fd.entries()) {
+            if (value) params.set(key, value);
+          }
+
+          if (currentType && currentType !== "tumu") {
+            params.set("type", currentType);
+          }
+
+          for (const [key, value] of Object.entries(extra)) {
+            if (value !== undefined && value !== null) {
+              params.set(key, value);
+            }
+          }
+
+          params.set("ajax", "1");
+          return params.toString();
+        }
+
+        function renderLogs(logs) {
+          if (!logs.length) {
+            logGrid.innerHTML =
+              '<p>Filtrelere uygun stok hareketi bulunamadı.</p>';
+            return;
+          }
+
+          logGrid.innerHTML = logs
+            .map((log) => {
+              const isGiris = log.hareket_turu === "giris";
+              const typeClass = isGiris
+                ? "success"
+                : log.hareket_turu === "cikis"
+                ? "danger"
+                : "";
+              const sign = isGiris ? "+" : "-";
+              const newStock =
+                log.eski_stok + (isGiris ? log.miktar : -log.miktar);
+
+              return `
+              <div class="log ${typeClass}">
+                <div class="row">
+                  <div class="col">
+                    <div class="stat-pin ${typeClass}">
+                      <div class="circle circle-${typeClass}"></div>
+                      ${isGiris ? "Giriş" : log.hareket_turu === "cikis" ? "Çıkış" : ""}
+                    </div>
+                  </div>
+                  <div class="col">
+                    <p>${log.relative_time}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="col">
+                      <h5 class="product-name">${log.urun_adi}</h5>
+                      <p class="barcode-number">#${log.sku}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <div class="row">
+                  <div class="col" style="gap: 4px">
+                    <h6>Miktar</h6>
+                    <span>${sign}${log.miktar} ${log.ad}</span>
+                  </div>
+                  <div class="col min-w-100" style="gap: 4px">
+                    <h6>Yeni Stok</h6>
+                    <span>${newStock} ${log.ad}</span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col" style="gap: 4px">
+                    <h6>Tedarikçi</h6>
+                    <span>${log.tedarikci || ""}</span>
+                  </div>
+                  <div class="col min-w-100" style="gap: 4px">
+                    <h6 data-label="İrsaliye"></h6>
+                    <span class="copy">${log.irsaliye_fatura_no || "-"}</span>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <div class="row">
+                  <div class="col">
+                    <h4 class="staff-name">${log.yetkili_adi}</h4>
+                  </div>
+                </div>
+              </div>
+            `;
+            })
+            .join("");
+        }
+
+        function updateStats(stats) {
+          const girisValueEl = document.getElementById("stat-giris-value");
+          const girisRateEl = document.getElementById("stat-giris-rate");
+          const cikisValueEl = document.getElementById("stat-cikis-value");
+          const cikisRateEl = document.getElementById("stat-cikis-rate");
+          const netValueEl = document.getElementById("stat-net-value");
+
+          girisValueEl.textContent = stats.thisMonth.giris.toLocaleString("tr-TR");
+          girisRateEl.className =
+            stats.changeRates.giris < 0 ? "danger" : "success";
+          girisRateEl.innerHTML =
+            '<span class="bxr bx-arrow-' +
+            (stats.changeRates.giris < 0 ? "down" : "up") +
+            '"></span>' +
+            Math.abs(parseInt(stats.changeRates.giris)) +
+            "%";
+
+          cikisValueEl.textContent = stats.thisMonth.cikis.toLocaleString("tr-TR");
+          cikisRateEl.className =
+            stats.changeRates.cikis < 0 ? "danger" : "success";
+          cikisRateEl.innerHTML =
+            '<span class="bxr bx-arrow-' +
+            (stats.changeRates.cikis < 0 ? "down" : "up") +
+            '"></span>' +
+            Math.abs(parseInt(stats.changeRates.cikis)) +
+            "%";
+
+          netValueEl.textContent =
+            (stats.thisMonth.net >= 0 ? "+" : "") + stats.thisMonth.net;
+        }
+
+        function updateCounts(counts) {
+          document.getElementById("count-total").textContent =
+            counts.totalLog.toLocaleString("tr-TR");
+          document.getElementById("count-total-tab").textContent =
+            counts.totalLog;
+          document.getElementById("count-giris-tab").textContent =
+            counts.totalGiris;
+          document.getElementById("count-cikis-tab").textContent =
+            counts.totalCikis;
+        }
+
+        function updateQuickFilterSelection() {
+          quickFilterLinks.forEach((a) => {
+            const t = a.dataset.type || "";
+            if (
+              (!currentType && t === "tumu") ||
+              (currentType && t === currentType)
+            ) {
+              a.classList.add("selected");
+            } else {
+              a.classList.remove("selected");
+            }
+          });
+        }
+
+        function fetchAndRender(extra = {}) {
+          const qs = buildQueryParams(extra);
+
+          fetch(`/stok-islemleri/hareketler?${qs}`)
+            .then((r) => r.json())
+            .then((data) => {
+              renderLogs(data.logs);
+              updateStats(data.stats);
+              updateCounts(data.counts);
+              currentType = data.type || "";
+              updateQuickFilterSelection();
+            })
+            .catch((err) => console.error("Log fetch error", err));
+        }
+
+        // Arama => debounce
+        let searchTimeout;
+        searchInput.addEventListener("input", () => {
+          clearTimeout(searchTimeout);
+          searchTimeout = setTimeout(() => fetchAndRender(), 300);
+        });
+
+        // Selectler
+        categorySelect.addEventListener("change", () => fetchAndRender());
+        lastSelect.addEventListener("change", () => fetchAndRender());
+
+        // Hızlı filtreler
+        quickFilterLinks.forEach((a) => {
+          a.addEventListener("click", (e) => {
+            e.preventDefault();
+            const t = a.dataset.type;
+            currentType = t === "tumu" ? "" : t;
+            fetchAndRender();
+          });
+        });
+      });
+    </script>
   </body>
 </html>

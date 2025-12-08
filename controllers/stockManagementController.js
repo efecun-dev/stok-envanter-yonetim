@@ -197,7 +197,7 @@ exports.getStockRemove = (req, res) => {
 
 exports.postStockOut = async (req, res, next) => {
   try {
-    const { products, waybill, description } = req.body;
+    const { products, waybill, description, old_stock } = req.body;
     const userId = req.user.id;
     if (!products) {
       return res.redirect("/stok-islemleri/stok-cikisi");
@@ -220,6 +220,7 @@ exports.postStockOut = async (req, res, next) => {
         productId,
         "cikis",
         waybill || null,
+        old_stock,
         quantity,
         description || "",
         userId
@@ -233,6 +234,55 @@ exports.postStockOut = async (req, res, next) => {
   }
 };
 
-exports.getStockLogs = (req, res) => {
-  res.render("stok-islemleri/stok-hareketleri");
+exports.getStockLogs = async (req, res, next) => {
+  try {
+    const { type, category, last, search, ajax } = req.query;
+
+    const filters = {
+      type: type === "giris" || type === "cikis" ? type : null,
+      category:
+        category && category !== "all" && !isNaN(category)
+          ? Number(category)
+          : null,
+      last: last || null,
+      search: search || null,
+    };
+
+    // 1) Liste için (type dahil)
+    const logs = await Logs.getLogs(filters);
+
+    // 2) Sayaçlar için (type hariç)
+    const baseFilters = { ...filters, type: null };
+    const baseLogs = await Logs.getLogs(baseFilters);
+
+    const counts = {
+      totalLog: baseLogs.length,
+      totalGiris: baseLogs.filter((l) => l.hareket_turu === "giris").length,
+      totalCikis: baseLogs.filter((l) => l.hareket_turu === "cikis").length,
+    };
+
+    const stats = await Logs.getMonthlyStats();
+
+    if (ajax === "1") {
+      return res.json({
+        logs,
+        stats,
+        counts,
+        type: filters.type || null,
+      });
+    }
+
+    const categories = await Category.getAllCategories();
+
+    res.render("stok-islemleri/stok-hareketleri", {
+      logs,
+      categories,
+      stats,
+      filters,
+      counts,
+      type: filters.type || null,
+    });
+  } catch (err) {
+    next(err);
+  }
 };

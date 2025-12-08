@@ -125,13 +125,7 @@ exports.postAddProduct = async (req, res) => {
       resim_url,
     };
 
-    const addProcess = await Product.addProduct(data);
-
-    if (addProcess) {
-      console.log("Ürün ekleme işlemi başarılı");
-    } else {
-      console.log("Ürün ekleme işlemi başarısız");
-    }
+    await Product.addProduct(data);
 
     res.redirect("/urun-yonetimi/yeni-urun");
   } catch (err) {

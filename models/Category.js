@@ -78,7 +78,7 @@ GROUP BY k.id;
       ]);
       return result;
     } catch (err) {
-      console.log("Category.deleteCategory hata:", err);
+      console.error("Category.deleteCategory hata:", err);
       throw err;
     }
   }

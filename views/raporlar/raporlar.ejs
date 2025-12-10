@@ -5,6 +5,8 @@
   <body class="light" style="display: flex">
     <!-- Sidebar -->
     <%- include("../../components/Sidebar", { active: "raporlar" }) %>
+    <!-- Alert -->
+    <%- include("../../components/Alert") %>
     <!-- Main -->
     <main id="dashboard-main">
       <div class="dash-header">
@@ -13,38 +15,71 @@
           <p>Detaylı analiz ve raporlar oluşturun</p>
         </div>
         <div class="col flex-row">
-          <a href="" class="btn"
-            ><span class="bxr bx-cog"></span>Rapor Ayarları</a
-          >
-          <a href="" class="btn btn-primary"
-            ><span class="bxr bx-plus"></span>Özel Rapor Oluştur</a
-          >
+          <a href="" class="btn">
+            <span class="bxr bx-cog"></span>Rapor Ayarları
+          </a>
+          <a href="" class="btn btn-primary">
+            <span class="bxr bx-plus"></span>Özel Rapor Oluştur
+          </a>
         </div>
       </div>
+
       <div class="dash-divider"></div>
+
+      <!-- Tarih Aralığı -->
       <div class="rep-filter">
         <div class="col">
           <h5>Tarih Aralığı:</h5>
-          <a href="" class="date-preset-btn">Bugün</a>
-          <a href="" class="date-preset-btn">Bu Hafta</a>
-          <a href="" class="date-preset-btn active">Bu Ay</a>
-          <a href="" class="date-preset-btn">Son 3 Ay</a>
-          <a href="" class="date-preset-btn">Bu Yıl</a>
+          <a
+            href="?range=today"
+            class="date-preset-btn <%= rangePreset === 'today' ? 'active' : '' %>"
+            >Bugün</a
+          >
+          <a
+            href="?range=week"
+            class="date-preset-btn <%= rangePreset === 'week' ? 'active' : '' %>"
+            >Bu Hafta</a
+          >
+          <a
+            href="?range=month"
+            class="date-preset-btn <%= rangePreset === 'month' ? 'active' : '' %>"
+            >Bu Ay</a
+          >
+          <a
+            href="?range=3m"
+            class="date-preset-btn <%= rangePreset === '3m' ? 'active' : '' %>"
+            >Son 3 Ay</a
+          >
+          <a
+            href="?range=year"
+            class="date-preset-btn <%= rangePreset === 'year' ? 'active' : '' %>"
+            >Bu Yıl</a
+          >
         </div>
         <div class="col">
-          <form action="" method="post">
+          <form action="/raporlar/raporlar" method="get">
             <div class="form-input">
-              <input type="date" /> - <input type="date" />
+              <input type="date" name="start" value="<%= startDate %>" /> -
+              <input type="date" name="end" value="<%= endDate %>" />
+              <button class="btn btn-primary btn-sm" type="submit">
+                Uygula
+              </button>
             </div>
           </form>
         </div>
       </div>
+
+      <!-- Üst Özet Kartlar -->
       <div class="report-flexbox">
         <div class="report-card">
           <div class="col">
             <div class="report-head">
-              ₺2.4M
-              <div class="stat-pin success">+12%</div>
+              ₺<%= (overview.inventoryValue || 0).toLocaleString('tr-TR') %>
+              <div
+                class="stat-pin <%= (overview.changeRates.inventory || 0) >= 0 ? 'success' : 'danger' %>"
+              >
+                <%= (overview.changeRates.inventory || 0) %>%
+              </div>
             </div>
             <p>Toplam Envanter Değeri</p>
           </div>
@@ -52,11 +87,16 @@
             <div class="flexbox-icon bxr" data-icon="chart-bar-columns"></div>
           </div>
         </div>
+
         <div class="report-card">
           <div class="col">
             <div class="report-head">
-              1,247
-              <div class="stat-pin success">+23%</div>
+              <%= (overview.totalGiris || 0).toLocaleString('tr-TR') %>
+              <div
+                class="stat-pin <%= (overview.changeRates.giris || 0) >= 0 ? 'success' : 'danger' %>"
+              >
+                <%= (overview.changeRates.giris || 0) %>%
+              </div>
             </div>
             <p>Toplam Giriş</p>
           </div>
@@ -67,11 +107,16 @@
             ></div>
           </div>
         </div>
+
         <div class="report-card">
           <div class="col">
             <div class="report-head">
-              892
-              <div class="stat-pin danger">-8%</div>
+              <%= (overview.totalCikis || 0).toLocaleString('tr-TR') %>
+              <div
+                class="stat-pin <%= (overview.changeRates.cikis || 0) >= 0 ? 'success' : 'danger' %>"
+              >
+                <%= (overview.changeRates.cikis || 0) %>%
+              </div>
             </div>
             <p>Toplam Çıkış</p>
           </div>
@@ -82,11 +127,16 @@
             ></div>
           </div>
         </div>
+
         <div class="report-card">
           <div class="col">
             <div class="report-head">
-              %28
-              <div class="stat-pin success">+15%</div>
+              %<%= Math.round((overview.avgMargin || 0) * 100) %>
+              <div
+                class="stat-pin <%= (overview.changeRates.margin || 0) >= 0 ? 'success' : 'danger' %>"
+              >
+                <%= (overview.changeRates.margin || 0) %>%
+              </div>
             </div>
             <p>Ortalama Kar Marjı</p>
           </div>
@@ -95,6 +145,8 @@
           </div>
         </div>
       </div>
+
+      <!-- Grafikler -->
       <div class="chart-container">
         <div class="chart-box">
           <div class="chart-header">
@@ -125,7 +177,10 @@
           <div class="chart" id="mostSellerChart"></div>
         </div>
       </div>
+
+      <!-- Rapor Şablonları -->
       <div class="templates-section">
+        <!-- Aylık Envanter -->
         <div class="template-box">
           <div class="template-icon">
             <span class="bxr bx-chart-bar-columns"></span>
@@ -134,11 +189,63 @@
           <div class="template-description">
             Detaylı stok durumu, giriş/çıkış özeti ve değer analizi
           </div>
-          <a href="" class="btn btn-primary center">
-            <span class="bxr bx-arrow-in-down-square-half"></span>
-            Rapor Oluştur
-          </a>
+
+          <div class="template-actions">
+            <button
+              type="button"
+              class="btn btn-primary center template-generate-btn"
+            >
+              <span class="bxr bx-arrow-in-down-square-half"></span>
+              Rapor Oluştur
+            </button>
+
+            <div class="template-format-buttons hidden">
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input
+                  type="hidden"
+                  name="template"
+                  value="monthly_inventory"
+                />
+                <input
+                  type="hidden"
+                  name="name"
+                  value="Aylık Envanter Raporu"
+                />
+                <input type="hidden" name="format" value="excel" />
+                <button class="btn btn-primary btn-sm" type="submit">
+                  <span class="bxr bx-table"></span> Excel
+                </button>
+              </form>
+
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input
+                  type="hidden"
+                  name="template"
+                  value="monthly_inventory"
+                />
+                <input
+                  type="hidden"
+                  name="name"
+                  value="Aylık Envanter Raporu"
+                />
+                <input type="hidden" name="format" value="pdf" />
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <span class="bxr bx-file"></span> PDF
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+
+        <!-- Karlılık Analizi -->
         <div class="template-box">
           <div class="template-icon">
             <span class="bxr bx-trending-up"></span>
@@ -147,11 +254,47 @@
           <div class="template-description">
             Ürün bazlı kar marjı, satış performansı ve gelir raporu
           </div>
-          <a href="" class="btn btn-primary center">
-            <span class="bxr bx-arrow-in-down-square-half"></span>
-            Rapor Oluştur
-          </a>
+
+          <div class="template-actions">
+            <button
+              type="button"
+              class="btn btn-primary center template-generate-btn"
+            >
+              <span class="bxr bx-arrow-in-down-square-half"></span>
+              Rapor Oluştur
+            </button>
+
+            <div class="template-format-buttons hidden">
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="profitability" />
+                <input type="hidden" name="name" value="Karlılık Analizi" />
+                <input type="hidden" name="format" value="excel" />
+                <button class="btn btn-primary btn-sm" type="submit">
+                  <span class="bxr bx-table"></span> Excel
+                </button>
+              </form>
+
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="profitability" />
+                <input type="hidden" name="name" value="Karlılık Analizi" />
+                <input type="hidden" name="format" value="pdf" />
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <span class="bxr bx-file"></span> PDF
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+
+        <!-- Kritik Stok -->
         <div class="template-box">
           <div class="template-icon">
             <span class="bxr bx-alert-triangle"></span>
@@ -160,11 +303,47 @@
           <div class="template-description">
             Düşük stok uyarıları, sipariş önerileri ve risk analizi
           </div>
-          <a href="" class="btn btn-primary center">
-            <span class="bxr bx-arrow-in-down-square-half"></span>
-            Rapor Oluştur
-          </a>
+
+          <div class="template-actions">
+            <button
+              type="button"
+              class="btn btn-primary center template-generate-btn"
+            >
+              <span class="bxr bx-arrow-in-down-square-half"></span>
+              Rapor Oluştur
+            </button>
+
+            <div class="template-format-buttons hidden">
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="critical_stock" />
+                <input type="hidden" name="name" value="Kritik Stok Raporu" />
+                <input type="hidden" name="format" value="excel" />
+                <button class="btn btn-primary btn-sm" type="submit">
+                  <span class="bxr bx-table"></span> Excel
+                </button>
+              </form>
+
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="critical_stock" />
+                <input type="hidden" name="name" value="Kritik Stok Raporu" />
+                <input type="hidden" name="format" value="pdf" />
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <span class="bxr bx-file"></span> PDF
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+
+        <!-- Trend Analizi (şimdilik generic sorgu kullanacağız) -->
         <div class="template-box">
           <div class="template-icon">
             <span class="bxr bx-chart-line"></span>
@@ -173,11 +352,47 @@
           <div class="template-description">
             Satış trend'leri, tahmin modelleri ve sezonluk analiz
           </div>
-          <a href="" class="btn btn-primary center">
-            <span class="bxr bx-arrow-in-down-square-half"></span>
-            Rapor Oluştur
-          </a>
+
+          <div class="template-actions">
+            <button
+              type="button"
+              class="btn btn-primary center template-generate-btn"
+            >
+              <span class="bxr bx-arrow-in-down-square-half"></span>
+              Rapor Oluştur
+            </button>
+
+            <div class="template-format-buttons hidden">
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="trend" />
+                <input type="hidden" name="name" value="Trend Analizi" />
+                <input type="hidden" name="format" value="excel" />
+                <button class="btn btn-primary btn-sm" type="submit">
+                  <span class="bxr bx-table"></span> Excel
+                </button>
+              </form>
+
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="trend" />
+                <input type="hidden" name="name" value="Trend Analizi" />
+                <input type="hidden" name="format" value="pdf" />
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <span class="bxr bx-file"></span> PDF
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
+
+        <!-- Tedarikçi Raporu -->
         <div class="template-box">
           <div class="template-icon">
             <span class="bxr bx-business"></span>
@@ -186,12 +401,48 @@
           <div class="template-description">
             Tedarikçi bazlı alım analizi ve performans değerlendirme
           </div>
-          <a href="" class="btn btn-primary center">
-            <span class="bxr bx-arrow-in-down-square-half"></span>
-            Rapor Oluştur
-          </a>
+
+          <div class="template-actions">
+            <button
+              type="button"
+              class="btn btn-primary center template-generate-btn"
+            >
+              <span class="bxr bx-arrow-in-down-square-half"></span>
+              Rapor Oluştur
+            </button>
+
+            <div class="template-format-buttons hidden">
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="supplier" />
+                <input type="hidden" name="name" value="Tedarikçi Raporu" />
+                <input type="hidden" name="format" value="excel" />
+                <button class="btn btn-primary btn-sm" type="submit">
+                  <span class="bxr bx-table"></span> Excel
+                </button>
+              </form>
+
+              <form
+                action="/raporlar/raporlar/olustur"
+                method="post"
+                class="inline-form"
+              >
+                <input type="hidden" name="template" value="supplier" />
+                <input type="hidden" name="name" value="Tedarikçi Raporu" />
+                <input type="hidden" name="format" value="pdf" />
+                <button class="btn btn-danger btn-sm" type="submit">
+                  <span class="bxr bx-file"></span> PDF
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+
+      <!-- Son Oluşturulan Tablolar -->
       <div class="last-created-section">
         <div class="table-section">
           <h3><span class="bxr bx-history"></span> Son Oluşturulan Tablolar</h3>
@@ -207,51 +458,92 @@
               </tr>
             </thead>
             <tbody>
+              <% if (lastReports && lastReports.length) { %> <%
+              lastReports.forEach(function(rep) { %>
               <tr>
-                <td class="last-title">Kasım 2024 Envanter Raporu</td>
-                <td><div class="stat-pin excel">Excel</div></td>
-                <td class="op-text">01.11.2024 - 30.11.2024</td>
-                <td class="op-text">20.11.2024 14:32</td>
-                <td class="op-text">2.4 MB</td>
+                <td class="last-title"><%= rep.ad %></td>
+                <td>
+                  <div
+                    class="stat-pin <%= rep.format === 'excel' ? 'excel' : rep.format === 'csv' ? 'csv' : 'pdf' %>"
+                  >
+                    <%= rep.format.toUpperCase() %>
+                  </div>
+                </td>
+                <td class="op-text">
+                  <% if (rep.tarih_baslangic && rep.tarih_bitis) { %> <%=
+                  dayjs(rep.tarih_baslangic).format("DD.MM.YYYY") %> - <%=
+                  dayjs(rep.tarih_bitis).format("DD.MM.YYYY") %> <% } else { %>
+                  Anlık <% } %>
+                </td>
+                <td class="op-text">
+                  <%= dayjs(rep.created_at).format("DD.MM.YYYY HH:mm") %>
+                </td>
+                <td class="op-text">
+                  <% const mb = (rep.boyut_bytes || 0) / (1024 * 1024); %> <%=
+                  mb >= 0.01 ? mb.toFixed(2) + ' MB' : ((rep.boyut_bytes || 0) /
+                  1024).toFixed(1) + ' KB' %>
+                </td>
                 <td>
                   <div class="actions-cell">
-                    <a href="" class="action-btn"
-                      ><span class="bxr bx-arrow-to-bottom-stroke"></span
-                    ></a>
-                    <a href="" class="action-btn delete"
-                      ><span class="bxr bx-trash"></span
-                    ></a>
+                    <a
+                      href="<%= rep.dosya_yolu || '#' %>"
+                      class="action-btn"
+                      title="İndir"
+                    >
+                      <span class="bxr bx-arrow-to-bottom-stroke"></span>
+                    </a>
+                    <a
+                      href="/raporlar/sil/<%= rep.id %>"
+                      class="action-btn delete"
+                      title="Sil"
+                    >
+                      <span class="bxr bx-trash"></span>
+                    </a>
                   </div>
                 </td>
               </tr>
+              <% }) %> <% } else { %>
               <tr>
-                <td class="last-title">Kritik Stok Uyarı Raporu</td>
-                <td><div class="stat-pin pdf">PDF</div></td>
-                <td class="op-text">Anlık</td>
-                <td class="op-text">19.11.2024 10:15</td>
-                <td class="op-text">486 KB</td>
-                <td>
-                  <div class="actions-cell">
-                    <a href="" class="action-btn"
-                      ><span class="bxr bx-arrow-to-bottom-stroke"></span
-                    ></a>
-                    <a href="" class="action-btn delete"
-                      ><span class="bxr bx-trash"></span
-                    ></a>
-                  </div>
+                <td colspan="6" class="op-text">
+                  Henüz oluşturulmuş rapor bulunmuyor.
                 </td>
               </tr>
+              <% } %>
             </tbody>
           </table>
         </div>
       </div>
     </main>
+
+    <!-- Backend'ten gelen grafik verileri -->
+    <script>
+      window.REPORT_CHARTS = <%- JSON.stringify(chartData || {}) %>;
+    </script>
+
     <!-- Scripts -->
     <script src="/assets/js/generateColorFromStr.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Grafik scriptleri -->
     <script src="/assets/js/charts/stockValue.js"></script>
     <script src="/assets/js/charts/categoryChart.js"></script>
     <script src="/assets/js/charts/inOut.js"></script>
     <script src="/assets/js/charts/mostSeller.js"></script>
+
+    <!-- Rapor oluştur butonlarının format seçeneklerini açıp kapatma -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const triggers = document.querySelectorAll(".template-generate-btn");
+
+        triggers.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            btn.classList.add("hidden");
+            const parent = btn.closest(".template-actions");
+            const box = parent.querySelector(".template-format-buttons");
+            box.classList.toggle("hidden");
+          });
+        });
+      });
+    </script>
   </body>
 </html>

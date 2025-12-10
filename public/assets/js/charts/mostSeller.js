@@ -1,38 +1,64 @@
-var options = {
-  series: [
-    {
-      data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380],
-    },
-  ],
-  chart: {
-    type: "bar",
-    height: 350,
-  },
-  plotOptions: {
-    bar: {
-      borderRadius: 4,
-      borderRadiusApplication: "end",
-      horizontal: true,
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  xaxis: {
-    categories: [
-      "South Korea",
-      "Canada",
-      "United Kingdom",
-      "Netherlands",
-      "Italy",
-      "France",
-      "Japan",
-      "United States",
-      "China",
-      "Germany",
-    ],
-  },
-};
+// /assets/js/charts/mostSeller.js
+document.addEventListener("DOMContentLoaded", function () {
+  const el = document.querySelector("#mostSellerChart");
+  if (!el || typeof ApexCharts === "undefined") return;
 
-var chart = new ApexCharts(document.querySelector("#mostSellerChart"), options);
-chart.render();
+  const data = (window.REPORT_CHARTS && window.REPORT_CHARTS.bestSellers) || {};
+  const labels = data.labels || [];
+  const values = data.values || [];
+
+  if (!labels.length || !values.length) {
+    el.innerHTML =
+      "<p class='op-text'>Bu tarih aralığında satış verisi yok.</p>";
+    return;
+  }
+
+  const options = {
+    chart: {
+      type: "bar",
+      height: 260,
+      toolbar: { show: false },
+    },
+    series: [
+      {
+        name: "Satış Adedi",
+        data: values,
+      },
+    ],
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: "60%",
+        borderRadius: 4,
+      },
+    },
+    dataLabels: {
+      enabled: true,
+      style: { fontSize: "11px" },
+      formatter: function (val) {
+        return val + " adet";
+      },
+    },
+    xaxis: {
+      categories: labels,
+      labels: { style: { fontSize: "11px" } },
+    },
+    yaxis: {
+      labels: { style: { fontSize: "11px" } },
+    },
+    grid: {
+      borderColor: "rgba(148, 163, 184, 0.25)",
+      strokeDashArray: 4,
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val + " adet";
+        },
+      },
+    },
+  };
+
+  const chart = new ApexCharts(el, options);
+  chart.render();
+});

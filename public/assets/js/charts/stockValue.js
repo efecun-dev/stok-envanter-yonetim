@@ -1,49 +1,78 @@
-var options = {
-  series: [
-    {
-      name: "Desktops",
-      data: [
-        2400000, 2300000, 2000000, 1_800_000, 3_432_000, 5420000, 2400000,
-        2300000, 2000000, 1_800_000, 3_432_000,
-      ],
-    },
-  ],
-  chart: {
-    height: 350,
-    type: "line",
-    zoom: {
-      enabled: false,
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "straight",
-  },
-  grid: {
-    row: {
-      colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-      opacity: 0.5,
-    },
-  },
-  xaxis: {
-    categories: [
-      "Ocak",
-      "Şubat",
-      "Mart",
-      "Nisan",
-      "Mayıs",
-      "Haziran",
-      "Temmuz",
-      "Ağustos",
-      "Eylül",
-      "Ekim",
-      "Kasım",
-      "Aralık",
-    ],
-  },
-};
+// /assets/js/charts/stockValue.js
+document.addEventListener("DOMContentLoaded", function () {
+  const el = document.querySelector("#stockValueChart");
+  if (!el || typeof ApexCharts === "undefined") return;
 
-var chart = new ApexCharts(document.querySelector("#stockValueChart"), options);
-chart.render();
+  const data = (window.REPORT_CHARTS && window.REPORT_CHARTS.stockValue) || {};
+  const labels = data.labels || [];
+  const values = data.values || [];
+
+  if (!labels.length || !values.length) {
+    el.innerHTML =
+      "<p class='op-text'>Bu tarih aralığında veri bulunamadı.</p>";
+    return;
+  }
+
+  const options = {
+    chart: {
+      type: "area",
+      height: 260,
+      toolbar: { show: false },
+      zoom: { enabled: false },
+      fontFamily: "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI'",
+    },
+    series: [
+      {
+        name: "Net Stok Değişimi",
+        data: values,
+      },
+    ],
+    dataLabels: { enabled: false },
+    stroke: {
+      curve: "smooth",
+      width: 3,
+    },
+    fill: {
+      type: "gradient",
+      gradient: {
+        shadeIntensity: 0.7,
+        opacityFrom: 0.4,
+        opacityTo: 0.0,
+        stops: [0, 50, 100],
+      },
+    },
+    xaxis: {
+      categories: labels,
+      labels: {
+        style: {
+          fontSize: "11px",
+        },
+      },
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+    },
+    yaxis: {
+      labels: {
+        formatter: function (val) {
+          return "₺" + Number(val).toLocaleString("tr-TR");
+        },
+        style: { fontSize: "11px" },
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return "₺" + Number(val).toLocaleString("tr-TR");
+        },
+      },
+    },
+    grid: {
+      borderColor: "rgba(148, 163, 184, 0.25)",
+      strokeDashArray: 4,
+      xaxis: { lines: { show: false } },
+    },
+  };
+
+  const chart = new ApexCharts(el, options);
+  chart.render();
+});

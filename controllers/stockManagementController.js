@@ -169,13 +169,18 @@ exports.postStockAdd = async (req, res, next) => {
 
       if (!quantity || quantity <= 0) continue;
 
+      const oldStockRaw = req.body[`old_stock_${productId}`];
+      const oldStock = parseInt(oldStockRaw, 10) || 0;
+
       await Product.addStock(productId, quantity);
+
       await Logs.addLog(
         productId,
         "giris",
-        waybill,
+        waybill || null,
+        oldStock,
         quantity,
-        description,
+        description || "",
         userId
       );
     }
@@ -197,8 +202,9 @@ exports.getStockRemove = (req, res) => {
 
 exports.postStockOut = async (req, res, next) => {
   try {
-    const { products, waybill, description, old_stock } = req.body;
+    const { products, waybill, description } = req.body;
     const userId = req.user.id;
+
     if (!products) {
       return res.redirect("/stok-islemleri/stok-cikisi");
     }
@@ -214,19 +220,26 @@ exports.postStockOut = async (req, res, next) => {
 
       if (!quantity || quantity <= 0) continue;
 
+      const oldStockRaw = req.body[`old_stock_${productId}`];
+      const oldStock = parseInt(oldStockRaw, 10) || 0;
+
       await Product.decreaseStock(productId, quantity);
 
       await Logs.addLog(
         productId,
         "cikis",
         waybill || null,
-        old_stock,
+        oldStock,
         quantity,
         description || "",
         userId
       );
     }
 
+    req.session.alert = {
+      type: "success",
+      message: "Stok çıkışı işlemi başarılı.",
+    };
     res.redirect("/stok-islemleri/stok-cikisi");
   } catch (err) {
     console.error("postStockOut hata:", err);
@@ -248,10 +261,8 @@ exports.getStockLogs = async (req, res, next) => {
       search: search || null,
     };
 
-    // 1) Liste için (type dahil)
     const logs = await Logs.getLogs(filters);
 
-    // 2) Sayaçlar için (type hariç)
     const baseFilters = { ...filters, type: null };
     const baseLogs = await Logs.getLogs(baseFilters);
 

@@ -30,8 +30,7 @@
             <strong>Hızlı İpucu</strong>
             <p>
               Birden fazla ürün ekleyebilir ve tek seferde toplu giriş
-              yapabilirsiniz. İrsaliye numarası ve tedarikçi bilgilerini
-              eklemeyi unutmayın.
+              yapabilirsiniz.
             </p>
           </div>
         </div>
@@ -252,35 +251,37 @@
         tr.dataset.price = product.price;
 
         tr.innerHTML = `
-      <td>
-        <div class="table-info">
-          <div class="row">${product.urun_adi}</div>
-          <div class="row"><p>#${product.sku}</p></div>
-        </div>
+    <td>
+      <div class="table-info">
+        <div class="row">${product.urun_adi}</div>
+        <div class="row"><p>#${product.sku}</p></div>
+      </div>
 
-        <input type="hidden" name="products[]" value="${product.id}">
-      </td>
+      <input type="hidden" name="products[]" value="${product.id}">
+      <!-- İşlem öncesi stok (eski_stok) -->
+      <input type="hidden" name="old_stock_${product.id}" value="${product.mevcut_stok}">
+    </td>
 
-      <td>${product.mevcut_stok} adet</td>
+    <td>${product.mevcut_stok} adet</td>
 
-      <td>
-        <input
-          type="number"
-          name="giris_miktari_${product.id}"
-          min="0"
-          value="0"
-          class="stok-input"
-        />
-      </td>
+    <td>
+      <input
+        type="number"
+        name="giris_miktari_${product.id}"
+        min="0"
+        value="0"
+        class="stok-input"
+      />
+    </td>
 
-      <td><strong class="new-stock">${product.mevcut_stok} adet</strong></td>
+    <td><strong class="new-stock">${product.mevcut_stok} adet</strong></td>
 
-      <td>
-        <div class="btn btn-danger fit-content remove-row">
-          <span class="bxr bx-trash"></span>
-        </div>
-      </td>
-    `;
+    <td>
+      <div class="btn btn-danger fit-content remove-row">
+        <span class="bxr bx-trash"></span>
+      </div>
+    </td>
+  `;
 
         tbody.appendChild(tr);
         recalculateSummary();

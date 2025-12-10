@@ -30,6 +30,8 @@ app.use(
   })
 );
 
+app.use("/storage", express.static(path.join(__dirname, "storage")));
+
 app.use((req, res, next) => {
   res.locals.session = req.session || null;
   next();

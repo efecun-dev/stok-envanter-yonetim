@@ -225,17 +225,23 @@ class Logs {
     yetkili_id
   ) {
     try {
-      let sql = `INSERT INTO hareketler (urun_id, hareket_turu, irsaliye_fatura_no, eski_stok, miktar, aciklama, yetkili_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-      const process = db.query(sql, [
+      const sql = `
+      INSERT INTO hareketler 
+        (urun_id, hareket_turu, irsaliye_fatura_no, eski_stok, miktar, aciklama, yetkili_id) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+
+      const [result] = await db.query(sql, [
         urun_id,
         hareket_turu,
-        irsaliye_fatura_no,
-        eski_stok,
+        irsaliye_fatura_no || null,
+        eski_stok ?? null,
         miktar,
-        aciklama,
+        aciklama || "",
         yetkili_id,
       ]);
-      return process;
+
+      return result; // istersen insertId vs. kullanırsın
     } catch (err) {
       console.error("Logs.addLog hata:", err);
       throw err;

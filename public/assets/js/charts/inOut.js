@@ -1,53 +1,78 @@
-var options = {
-  series: [
-    {
-      name: "Giriş",
-      data: [44, 55, 57, 56, 61, 58, 63, 60, 66],
+// /assets/js/charts/inOut.js
+document.addEventListener("DOMContentLoaded", function () {
+  const el = document.querySelector("#inOutChart");
+  if (!el || typeof ApexCharts === "undefined") return;
+
+  const data = (window.REPORT_CHARTS && window.REPORT_CHARTS.inOut) || {};
+  const labels = data.labels || [];
+  const giris = data.giris || [];
+  const cikis = data.cikis || [];
+
+  if (!labels.length || (!giris.length && !cikis.length)) {
+    el.innerHTML =
+      "<p class='op-text'>Bu tarih aralığında giriş/çıkış verisi yok.</p>";
+    return;
+  }
+
+  const options = {
+    chart: {
+      type: "bar",
+      height: 260,
+      stacked: false,
+      toolbar: { show: false },
     },
-    {
-      name: "Çıkış",
-      data: [76, 85, 101, 98, 87, 105, 91, 114, 94],
-    },
-  ],
-  chart: {
-    type: "bar",
-    height: 350,
-  },
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      columnWidth: "55%",
-      borderRadius: 5,
-      borderRadiusApplication: "end",
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    show: true,
-    width: 2,
-    colors: ["transparent"],
-  },
-  xaxis: {
-    categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
-  },
-  yaxis: {
-    title: {
-      text: "$ (thousands)",
-    },
-  },
-  fill: {
-    opacity: 1,
-  },
-  tooltip: {
-    y: {
-      formatter: function (val) {
-        return "$ " + val + " thousands";
+    series: [
+      { name: "Giriş", data: giris },
+      { name: "Çıkış", data: cikis },
+    ],
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: "40%",
+        borderRadius: 4,
       },
     },
-  },
-};
+    dataLabels: { enabled: false },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ["transparent"],
+    },
+    xaxis: {
+      categories: labels,
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+      labels: {
+        style: { fontSize: "11px" },
+      },
+    },
+    yaxis: {
+      labels: {
+        style: { fontSize: "11px" },
+      },
+      title: {
+        text: "Adet",
+        style: { fontSize: "11px" },
+      },
+    },
+    grid: {
+      borderColor: "rgba(148, 163, 184, 0.25)",
+      strokeDashArray: 4,
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val + " adet";
+        },
+      },
+    },
+    legend: {
+      position: "top",
+      horizontalAlign: "left",
+      fontSize: "11px",
+    },
+  };
 
-var chart = new ApexCharts(document.querySelector("#inOutChart"), options);
-chart.render();
+  const chart = new ApexCharts(el, options);
+  chart.render();
+});

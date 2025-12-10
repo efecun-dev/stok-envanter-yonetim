@@ -60,6 +60,12 @@
           <div class="log-grid">
             <% if (logs && logs.length) { %>
               <% logs.forEach((log) => { %>
+                <%
+  const miktarPozitif = Math.abs(log.miktar);
+  const yeniStok = log.hareket_turu === 'giris'
+    ? log.eski_stok + miktarPozitif
+    : log.eski_stok - miktarPozitif;
+%>
                 <div
                   class="log <%= log.hareket_turu === 'giris' ? 'success' : log.hareket_turu === 'cikis' ? 'danger' : '' %>"
                 >
@@ -98,14 +104,13 @@
                     <div class="col" style="gap: 4px">
                       <h6>Miktar</h6>
                       <span>
-                        <%= log.hareket_turu === 'giris' ? '+' : '-' %>
-                        <%= log.miktar %> <%= log.ad %>
+                        <%= log.hareket_turu === 'giris' ? '+' : '-' %><%= miktarPozitif %> <%= log.ad %>
                       </span>
                     </div>
                     <div class="col min-w-100" style="gap: 4px">
                       <h6>Yeni Stok</h6>
                       <span>
-                        <%= log.eski_stok + (log.hareket_turu === 'giris' ? log.miktar : -log.miktar) %>
+                        <%= yeniStok %>
                         <%= log.ad %>
                       </span>
                     </div>
@@ -132,7 +137,9 @@
                 </div>
               <% }) %>
             <% } else { %>
-              <p>Filtrelere uygun stok hareketi bulunamadı.</p>
+              <div class="no-data">
+            <img src="/assets/svg/no_data.svg" />
+          </div>
             <% } %>
           </div>
         </div>
@@ -271,7 +278,7 @@
         function renderLogs(logs) {
           if (!logs.length) {
             logGrid.innerHTML =
-              '<p>Filtrelere uygun stok hareketi bulunamadı.</p>';
+              '<div class="no-data"><img src="/assets/svg/no_data.svg" /></div>';
             return;
           }
 

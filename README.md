@@ -39,15 +39,20 @@ Node.js + Express + EJS kullanılarak geliştirilmiş, ürün/stok takibi, kriti
 - Layout, partial ve component mimarisi
 - Sidebar, navbar, kart, tablo gibi tekrar kullanılabilir (reusable) bileşenler
 
+### 💾 Veritabanı yedekleme sistemi
+- Her gün saat 00:00 - 01:00 arası otomatik veritabanı yedeklemesi alınır.
+- Alınan yedek root dizininde save klasörü altında .sql uzantılı olarak kaydedilir.
+- Manuel olarak yedekten devam edilebilir.
+
 ## 🛠 Teknolojiler
 
 | Alan | Teknoloji |
 |---|---|
 | **Backend** | Node.js, Express.js |
 | **Template Engine** | EJS |
-| **Veritabanı** | MySQL / PostgreSQL |
-| **Styling** | TailwindCSS / Vanilla CSS |
-| **Grafikler** | ApexCharts / Chart.js |
+| **Veritabanı** | MySQL |
+| **Styling** | Vanilla CSS |
+| **Grafikler** | ApexCharts |
 | **Auth & Security** | Express-Session, BCrypt |
 
 ## 📸 Ekran Görüntüleri
@@ -88,8 +93,8 @@ SESSION_SECRET=oturum_anahtariniz
 
 ### 4️⃣ Veritabanını Kur
 
-1. MySQL veya PostgreSQL üzerinde stok adında bir veritabanı oluşturun.
-2. /config klasöründeki SQL dosyasını veya şemayı içeri aktarın.
+1. MySQL veya PostgreSQL üzerinde invento_db adında bir veritabanı oluşturun.
+2. root klasöründeki SQL dosyasını veya şemayı içeri aktarın.
 
 ### 5️⃣ Uygulamayı Başlat
 ```bash
@@ -114,20 +119,23 @@ Dosya düzeninin ne kadar temiz olduğunu gösteren o meşhur ağaç yapısı.
 │   ├── js/
 │   └── img/
 ├── routes/           # Endpoint tanımları
+├── save/             # Veritabanı yedeklemeleri
+├── screenshots       # Sistem ile ilgili github README.md için ekran görüntüleri
+├── storage           # Rapor vb. içeriklerin tutulduğu bölüm
 ├── utils/            # Yardımcı fonksiyonlar
 ├── views/            # EJS şablonları
 ├── server.js         # Uygulama giriş noktası
+├── invento_db.sql    # Uygulama veritabanı dosyası
 └── package.json
+
 ```
 
-### 7️⃣ Güvenlik, TODO ve Lisans
-Son vuruşlar. Gelecek planların ve güvenlik önlemlerin.
+### 7️⃣ Güvenlik / Lisans
 
 ## 🛡 Güvenlik
 
 - **BCrypt:** Kullanıcı parolaları veritabanında hashlenerek saklanır.
 - **Session Auth:** Güvenli oturum yönetimi.
-- **Role Based Access:** Yetkisiz kullanıcıların admin sayfalarına erişimi engellenir.
 - **SQL Injection Koruması:** Parametreli sorgular veya ORM kullanımı.
 
 ## 🧩 TODO
@@ -142,5 +150,6 @@ Son vuruşlar. Gelecek planların ve güvenlik önlemlerin.
 ## 📄 Lisans
 
 Bu proje [MIT Lisansı](LICENSE) ile yayınlanmıştır.
+
 
 

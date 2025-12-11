@@ -79,6 +79,10 @@ app.use("/stok-islemleri", auth, stockManagementRouter);
 app.use("/raporlar", auth, reportsRouter);
 app.use("/api", auth, apiRouter);
 
+/* const bcrypt = require("bcrypt");
+var password = bcrypt.hashSync("sifre", 10);
+console.log(password); */
+
 /* Veritabanı Yedek Alma Sistemi */
 
 async function createFullBackup() {

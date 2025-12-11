@@ -87,8 +87,20 @@ cp .env.example .env
 ```
 *.env içeriğini düzenleyin*
 ```properties
+# SERVER
+
 PORT=3000
-SESSION_SECRET=oturum_anahtariniz
+
+# SESSION
+
+SESSION_SECRET=session_anahtariniz
+
+# DATABASE
+
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+DB_HOST=
 ```
 
 ### 4️⃣ Veritabanını Kur
@@ -150,6 +162,7 @@ Dosya düzeninin ne kadar temiz olduğunu gösteren o meşhur ağaç yapısı.
 ## 📄 Lisans
 
 Bu proje [MIT Lisansı](LICENSE) ile yayınlanmıştır.
+
 
 
 

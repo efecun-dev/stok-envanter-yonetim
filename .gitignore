@@ -1,4 +1,4 @@
 node_modules
 .env
-/storages
-/products
+/storage/*
+public/assets/products/*
